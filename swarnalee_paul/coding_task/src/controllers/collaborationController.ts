@@ -1,16 +1,19 @@
-import { Request, Response } from "hono";
+import { Context } from "hono";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export const addCollaborator = async (req: Request, res: Response) => {
-  const { documentId, userId, accessType } = req.body;
+export const addCollaborator = async (c: Context) => {
+ 
+  const body = await c.req.json();
+  const { documentId, userId, accessType } = body;
+
   try {
     const permission = await prisma.permission.create({
       data: { documentId, userId, accessType },
     });
-    res.status(201).json(permission);
+    return c.json(permission, 201); 
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    return c.json({ error: (error as Error).message }, 400); 
   }
 };

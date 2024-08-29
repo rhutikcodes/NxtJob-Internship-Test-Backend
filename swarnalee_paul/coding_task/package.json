@@ -15,6 +15,7 @@
     "@whatwg-node/server": "^0.9.49",
     "bcrypt": "^5.1.1",
     "hono": "^4.5.9",
+    "mysql": "^2.18.1",
     "mysql2": "^3.11.0",
     "prisma": "^5.19.0",
     "websocket": "^1.0.35"
