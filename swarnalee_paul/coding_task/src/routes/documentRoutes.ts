@@ -1,14 +1,15 @@
-import { Router } from "hono";
+import { Hono } from "hono";
 import {
   createDocument,
   updateDocument,
   deleteDocument,
 } from "../controllers/documentController";
 
-const router = new Router();
+const documentRoutes = new Hono();
 
-router.post("/documents", createDocument);
-router.put("/documents/:id", updateDocument);
-router.delete("/documents/:id", deleteDocument);
+// Define routes directly on the Hono instance
+documentRoutes.post("/documents", createDocument);
+documentRoutes.put("/documents/:id", updateDocument);
+documentRoutes.delete("/documents/:id", deleteDocument);
 
-export default router;
+export default documentRoutes;

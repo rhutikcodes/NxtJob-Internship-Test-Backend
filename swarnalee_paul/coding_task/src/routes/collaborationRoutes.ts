@@ -1,8 +1,8 @@
-import { Router } from "hono";
+import { Hono } from "hono";
 import { addCollaborator } from "../controllers/collaborationController";
 
-const router = new Router();
+const collaborationRoutes = new Hono();
 
-router.post("/collaborators", addCollaborator);
+collaborationRoutes.post("/collaborators", addCollaborator);
 
-export default router;
+export default collaborationRoutes;

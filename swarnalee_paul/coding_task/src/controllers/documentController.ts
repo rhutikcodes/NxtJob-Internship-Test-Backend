@@ -1,40 +1,48 @@
-import { Request, Response } from "hono";
+import { Context } from "hono";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export const createDocument = async (req: Request, res: Response) => {
-  const { title, content, ownerId } = req.body;
+export const createDocument = async (c: Context) => {
+  // Await JSON body
+  const body = await c.req.json();
+  const { title, content, ownerId } = body;
+
   try {
     const document = await prisma.document.create({
       data: { title, content, ownerId },
     });
-    res.status(201).json(document);
+    return c.json(document, 201); // Send JSON response with status code 201
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    return c.json({ error: (error as Error).message }, 400); // Send error response with status code 400
   }
 };
 
-export const updateDocument = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const { title, content } = req.body;
+export const updateDocument = async (c: Context) => {
+  // Await URL parameters and JSON body
+  const id = Number(c.req.param("id"));
+  const body = await c.req.json();
+  const { title, content } = body;
+
   try {
     const document = await prisma.document.update({
-      where: { id: Number(id) },
+      where: { id },
       data: { title, content },
     });
-    res.status(200).json(document);
+    return c.json(document, 200); // Send JSON response with status code 200
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    return c.json({ error: (error as Error).message }, 400); // Send error response with status code 400
   }
 };
 
-export const deleteDocument = async (req: Request, res: Response) => {
-  const { id } = req.params;
+export const deleteDocument = async (c: Context) => {
+  // Await URL parameters
+  const id = Number(c.req.param("id"));
+
   try {
-    await prisma.document.delete({ where: { id: Number(id) } });
-    res.status(200).json({ message: "Document deleted" });
+    await prisma.document.delete({ where: { id } });
+    return c.json({ message: "Document deleted" }, 200); // Send JSON response with status code 200
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    return c.json({ error: (error as Error).message }, 400); // Send error response with status code 400
   }
 };

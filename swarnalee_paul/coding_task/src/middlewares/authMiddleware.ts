@@ -1,7 +1,20 @@
-import { Request, Response, NextFunction } from "hono";
+import { Hono } from "hono";
 
+export const authMiddleware = async (c, next) => {
+  
+  const { req, res } = c;
 
-export const authMiddleware = (req: Request, res: Response, next: NextFunction) =>{
+  
+  const authHeader = req.headers.get("Authorization");
 
-    next();
+  if (authHeader) {
+   
+    console.log("Authorization header:", authHeader);
+
+   
+    await next();
+  } else {
+   
+    return new Response("Unauthorized", { status: 401 });
+  }
 };
