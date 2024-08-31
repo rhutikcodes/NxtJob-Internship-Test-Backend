@@ -1,20 +1,13 @@
-import { Hono } from "hono";
+import { Context, Next } from "hono";
 
-export const authMiddleware = async (c, next) => {
-  
-  const { req, res } = c;
-
-  
-  const authHeader = req.headers.get("Authorization");
+// Define the middleware function with types for the parameters
+export const authMiddleware = async (c: Context, next: Next) => {
+  const authHeader = c.req.header("Authorization");
 
   if (authHeader) {
-   
     console.log("Authorization header:", authHeader);
-
-   
-    await next();
+    await next(); // Call the next middleware or route handler
   } else {
-   
     return new Response("Unauthorized", { status: 401 });
   }
 };

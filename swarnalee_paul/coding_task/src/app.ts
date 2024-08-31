@@ -3,9 +3,10 @@ import authRoutes from "./routes/authRoutes";
 import documentRoutes from "./routes/documentRoutes";
 import collaborationRoutes from "./routes/collaborationRoutes";
 import { authMiddleware } from "./middlewares/authMiddleware";
-import wss from "./utils/WebSocketManager";
+
 
 const app = new Hono();
+
 
 app.use("/api", authMiddleware);
 app.route("/api/auth", authRoutes);

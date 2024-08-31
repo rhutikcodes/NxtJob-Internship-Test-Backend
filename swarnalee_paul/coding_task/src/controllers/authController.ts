@@ -1,39 +1,32 @@
-import { Context } from "hono";
-import { PrismaClient } from "@prisma/client";
-import { hashPassword, verifyPassword } from "../services/authService";
+import { Server } from "http";
+import WebSocket, { WebSocketServer } from "ws";
 
-const prisma = new PrismaClient();
+class WebSocketManager {
+  private wss: WebSocketServer;
 
-export const registerUser = async (c: Context) => {
- 
-  const body = await c.req.json();
-  const { username, password } = body;
-
-  try {
-    const hashedPassword = await hashPassword(password);
-    const user = await prisma.user.create({
-      data: { username, password: hashedPassword },
-    });
-    return c.json(user, 201); 
-  } catch (error) {
-    return c.json({ error: (error as Error).message }, 400); 
-  }
-};
-
-export const loginUser = async (c: Context) => {
- 
-  const body = await c.req.json();
-  const { username, password } = body;
-
-  try {
-    const user = await prisma.user.findUnique({ where: { username } });
-    if (user && (await verifyPassword(password, user.password))) {
-     
-      return c.json({ message: "Login successful" }, 200); 
-    } else {
-      return c.json({ error: "Invalid credentials" }, 401); 
+  constructor(server: Server) {
+    if (!server) {
+      throw new Error("An HTTP server instance must be provided.");
     }
-  } catch (error) {
-    return c.json({ error: (error as Error).message }, 400); 
+
+    this.wss = new WebSocketServer({ server });
+
+    this.wss.on("connection", (ws: WebSocket) => {
+      ws.on("message", (message: string) => {
+        console.log(`Received: ${message}`);
+      });
+
+      ws.send("Connection established");
+    });
   }
-};
+
+  broadcast(message: string) {
+    this.wss.clients.forEach((client: WebSocket) => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(message);
+      }
+    });
+  }
+}
+
+export default WebSocketManager;

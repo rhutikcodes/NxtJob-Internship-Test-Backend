@@ -18,10 +18,12 @@
     "mysql": "^2.18.1",
     "mysql2": "^3.11.0",
     "prisma": "^5.19.0",
-    "websocket": "^1.0.35"
+    "websocket": "^1.0.35",
+    "ws": "^8.18.0"
   },
   "devDependencies": {
     "@types/node": "^22.5.0",
+    "@types/ws": "^8.5.12",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4"
   }
