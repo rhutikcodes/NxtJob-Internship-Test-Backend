@@ -1,9 +1,10 @@
 
 1. How do you stay updated on backend development topics and remain active in the community? (Forums/Discord/Slack/Meetups/Twitter/Blogs)
-->
+->To stay updated on backend development topics and remain active in the community, I follow a mix of strategies. I read relevant blogs and tech articles to keep up with new trends and technologies. I participate in forums like Stack Overflow and Reddit for problem-solving and discussions. I join Discord and Slack communities for real-time interaction and networking with peers. I attend meetups and webinars to gain insights from industry experts. Additionally, I follow influential developers and tech organizations on Twitter for updates and announcements.
 
 2. What are your most-used IDE and keyboard shortcuts when coding?
-->
+->I used ctr+s allways to save my files again and again
+I use Visual Studio Code (VSCode) as my primary IDE.
 
 3. How do you approach the design and implementation of a scalable backend system? Feel free to attach code snippets for better explanation.
-->
+->  
