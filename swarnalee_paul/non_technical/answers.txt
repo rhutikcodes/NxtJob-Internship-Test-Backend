@@ -1,9 +1,9 @@
 
 1. How do you stay updated on backend development topics and remain active in the community? (Forums/Discord/Slack/Meetups/Twitter/Blogs)
-->
+->Discord,stack,Meetups,Youtube
 
 2. What are your most-used IDE and keyboard shortcuts when coding?
-->
+->Vs code is the most-used IDE and ctrl+p,ctrl+g,Tab,ctrl+z,ctrl+shift+G,Ctrl + Shift + A,Ctrl+Enter
 
 3. How do you approach the design and implementation of a scalable backend system? Feel free to attach code snippets for better explanation.
-->
+->When designing a scalable backend system, I focus on modularity, efficient database interaction, and real-time communication. By organizing the code into clear modules—such as controllers for business logic, utilities for WebSocket management, and models for database operations—I ensure that the system is both maintainable and scalable. Using Prisma for database interactions allows for efficient and schema-driven operations, while integrating WebSocket servers facilitates real-time updates. This approach ensures that the backend remains performant as it scales, handling increasing loads effectively and maintaining clean, testable code.
