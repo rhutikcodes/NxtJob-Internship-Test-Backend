@@ -1,11 +1,11 @@
 1.  Explain, in your own words, the importance of data consistency in real-time applications.
-->
+->Data consistency in real-time applications is important because it ensures that everyone sees the same information at the same time. For example, if multiple people are editing a document together, consistency means everyone sees the latest changes instantly. Without consistency, some users might see outdated or conflicting information, which can lead to confusion or mistakes. Keeping data consistent in real-time helps ensure that everyone is on the same page and that the application runs smoothly.
 
 2. How do you handle concurrency issues in a multi-user environment?
-->
+->Handling concurrency issues in a multi-user environment involves ensuring that multiple users can interact with the system simultaneously without causing conflicts or data corruption. To manage this, I use techniques like locking mechanisms (e.g., optimistic or pessimistic locking) to prevent multiple users from modifying the same data at the same time. Additionally, I implement transaction management to ensure that operations are completed fully or not at all, avoiding partial updates that can lead to inconsistencies. Utilizing database isolation levels can also help manage concurrent access to data. These approaches together ensure data integrity and a smooth user experience, even when multiple users are accessing the system simultaneously.
 
 3. Describe a scenario where you had to optimize database queries for better performance.
-->
+->In a recent project, I optimized database queries for a task management system using Prisma. The initial implementation faced performance issues due to inefficient queries and lack of indexing. To improve performance, I identified slow queries in the createDocument, updateDocument, and deleteDocument functions, and added appropriate indexes on columns like documentId and ownerId. I also refactored queries to ensure they were efficient and leveraged Prisma’s capabilities for batch operations. These adjustments significantly reduced query execution time and improved the application's responsiveness.
 
 4. Discuss the trade-offs between using WebSockets and HTTP/2 for real-time communication.
-->
+->WebSockets and HTTP/2 each have their strengths and trade-offs for real-time communication. WebSockets provide a persistent, bidirectional connection, making them ideal for applications needing constant, low-latency updates like live chats or gaming. They reduce overhead by maintaining a single connection. On the other hand, HTTP/2, which builds on HTTP's request/response model, supports multiplexing multiple streams over a single connection, improving efficiency for web applications but still falling short for continuous real-time communication. HTTP/2 is better for enhancing traditional web performance, reducing latency for multiple short-lived requests, while WebSockets excel in scenarios requiring ongoing, instant data exchange.
