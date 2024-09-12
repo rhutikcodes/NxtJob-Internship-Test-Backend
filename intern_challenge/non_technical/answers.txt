@@ -1,9 +1,9 @@
 
 1. How do you stay updated on backend development topics and remain active in the community? (Forums/Discord/Slack/Meetups/Twitter/Blogs)
-->
+->Discord and meetup
 
 2. What are your most-used IDE and keyboard shortcuts when coding?
-->
+->Vs code
 
 3. How do you approach the design and implementation of a scalable backend system? Feel free to attach code snippets for better explanation.
-->
+->i have generally create all the functionality in paper then i write a approach then write a code.
