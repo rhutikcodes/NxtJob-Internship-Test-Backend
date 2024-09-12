@@ -1,0 +1,58 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            Int           @id @default(autoincrement())
+  name          String
+  email         String         @unique
+  password      String
+  createdAt     DateTime       @default(now())
+  documents     Document[]     @relation("UserDocuments")
+  collaborators Collaborator[] // Add this field to link the `Collaborator` model
+}
+
+model Document {
+  id           Int            @id @default(autoincrement())
+  title        String
+  content      String
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+  owner        User            @relation("UserDocuments", fields: [ownerId], references: [id])
+  ownerId      Int
+  collaborators Collaborator[] 
+  versions     Version[]
+}
+
+model Collaborator {
+  id          Int       @id @default(autoincrement())
+  user        User      @relation(fields: [userId], references: [id])
+  userId      Int
+  document    Document  @relation(fields: [documentId], references: [id])
+  documentId  Int
+  role        Role
+}
+
+model Version {
+  id          Int      @id @default(autoincrement())
+  content     String
+  createdAt   DateTime @default(now())
+  document    Document @relation(fields: [documentId], references: [id])
+  documentId  Int
+}
+
+enum Role {
+  VIEW
+  EDIT
+}

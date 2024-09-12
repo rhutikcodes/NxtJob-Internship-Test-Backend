@@ -1,0 +1,21 @@
+{
+  "name": "my-app",
+  "scripts": {
+    "dev": "tsx watch src/index.ts"
+  },
+  "dependencies": {
+    "@clerk/backend": "^1.9.2",
+    "@clerk/clerk-sdk-node": "^5.0.35",
+    "@hono/clerk-auth": "^2.0.0",
+    "@hono/node-server": "^1.12.2",
+    "@prisma/client": "^5.19.1",
+    "hono": "^4.5.11",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.11.1",
+    "prisma": "^5.19.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.17",
+    "tsx": "^4.7.1"
+  }
+}
