@@ -41,11 +41,8 @@ export const signin = async (c: Context)=>{
         if(!user || user.password !== password){
             return c.json({message: "Password or email not correct"}, 400)
         }
-        let token = jwt.sign(
-            { id: user.id, email: user.email },  
-            process.env.secretKey as string,     
-            { expiresIn: "1h" }                  
-        );        return c.json({message: "You have logged in successfully!", token},200)
+              
+        return c.json({message: "You have logged in successfully!"},200)
     } catch (error) {
         console.log(error)
     }

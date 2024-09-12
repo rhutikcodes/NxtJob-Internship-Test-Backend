@@ -12,7 +12,8 @@
     "hono": "^4.5.11",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.11.1",
-    "prisma": "^5.19.1"
+    "prisma": "^5.19.1",
+    "ws": "^8.18.0"
   },
   "devDependencies": {
     "@types/node": "^20.11.17",
