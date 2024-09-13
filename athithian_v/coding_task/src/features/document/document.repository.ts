@@ -15,12 +15,13 @@ type Document = {
     size: number;
     ownerId: number;
     description: string;
+    path:string
 }
 
 export default class DocumentRepository{
 
     private static checkDoc = async(docId:number)=>{
-        const doc = await db.select({id:document.id, owner:document.ownerId}).from(document).where(eq(document.id, docId));
+        const doc = await db.select({id:document.id, owner:document.ownerId, url: document.url}).from(document).where(eq(document.id, docId));
 
         if(doc.length<0){
             throw new ApplicationError(400, `Document:${docId} Does not exists`);
@@ -41,7 +42,8 @@ export default class DocumentRepository{
                         .values(
                             {
                                 docId: record[0].id, 
-                                url: data.url
+                                url: data.url,
+                                path: data.path
                             }
                         );
 
@@ -52,13 +54,17 @@ export default class DocumentRepository{
                     );
 
                 return doc;
-            })
+            }, 
+            {
+                isolationLevel: "serializable"
+            }
+        )
         } catch (error) {
             throw error;   
         }
     }
 
-    static edit = async (userId:number, docId:number, url:string, details:string):Promise<void>=> {
+    static edit = async (userId:number, docId:number, filePath:string, details:string, url:string):Promise<void>=> {
         try {
 
             await this.checkDoc(docId);
@@ -84,7 +90,7 @@ export default class DocumentRepository{
             await db.transaction(async (tx)=>{
                 await tx.
                     update(document)
-                    .set({url})
+                    .set({url, path:filePath})
                     .where(eq(document.id, docId))
                 
                 const previousVersion = await tx
@@ -100,16 +106,14 @@ export default class DocumentRepository{
 
                 const newVerions = await tx
                     .insert(version)
-                    .values({docId, url, version: newVersionNumber}).$returningId();
+                    .values({docId, url, path: filePath, version: newVersionNumber}).$returningId();
 
                 await tx
                     .insert(change)
                     .values({userId, docId, versionId:newVerions[0].id, details});
             },
             {
-                isolationLevel: "serializable", //Ensures transaction to execute serially one after other.
-                accessMode: "read write",
-                withConsistentSnapshot: true,
+                isolationLevel: "serializable"
             }
         )
         } catch (error) {
@@ -125,28 +129,26 @@ export default class DocumentRepository{
                 throw new ApplicationError(400, `User:${userId} is not the owner of Documnet:${docId}`)
             }
 
-            const urls = await db.select({url: version.url}).from(version).where(eq(version.docId, docId));
+            const paths = await db.select({path: version.path}).from(version).where(eq(version.docId, docId));
 
             await db.transaction(async (tx)=>{
-                await tx.delete(document).where(eq(document.id, docId));
-                await tx.delete(version).where(eq(version.docId, docId));
                 await tx.delete(change).where(eq(change.docId, docId));
+                await tx.delete(version).where(eq(version.docId, docId));
+                await tx.delete(document).where(eq(document.id, docId));
             },
             {
-                isolationLevel: "serializable",
-                accessMode: "read write",
-                withConsistentSnapshot: true
+                isolationLevel: "serializable"
             }
         );
 
-            await Promise.all(urls.map(url=>deleteFile(url.url)));
+            await Promise.all(paths.map(path=>deleteFile(path.path)));
         } catch (error) {
             throw error;   
         }
     }
 
-    static view = async (userId:number, docId:number):Promise<boolean>=>{
-        await this.checkDoc(docId);
+    static view = async (userId:number, docId:number):Promise<string>=>{
+        const doc = await this.checkDoc(docId);
 
         const permit = await db
                 .select({permission: permission.permission})
@@ -157,12 +159,13 @@ export default class DocumentRepository{
                         eq(permission.docId, docId)
                     )
                 );
+        
 
-        if(permit.length===0){
+        if(permit.length===0 && doc[0].owner!==userId){
             throw new ApplicationError(400, `User:${userId} is not allowed to view Document:${docId}`);
         }
 
-        return true;
+        return doc[0].url;
     }
 
     static setPermission = async (owner:number, userId:number, docId:number, permit:string) => {

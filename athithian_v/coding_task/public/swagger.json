@@ -58,11 +58,13 @@
                   "type": "object",
                     "properties": {
                         "password": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "User1Password"
                         },
                         "email":{
                             "type": "string",
-                            "format": "email"
+                            "format": "email",
+                            "example": "user1@example.com"
                         }
                     },
                     "required": ["password", "email"]
@@ -114,11 +116,11 @@
                       "type": "string"
                     },
                     "description": {
-                      "description": "description of the document",
+                      "description": "Description of the document",
                       "type": "string"
                     }
                   },
-                  "required": ["file", "name", "details"]
+                  "required": ["file"]
                 }
               }
             }

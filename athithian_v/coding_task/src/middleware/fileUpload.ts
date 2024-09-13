@@ -8,7 +8,7 @@ const storage = multer.diskStorage({
         cb(null, 'public/files');
     },
     filename: (req:AuthorizedRequest, file, cb)=>{
-        cb(null, `Profile-${Date.now()}${path.extname(file.originalname)}`);
+        cb(null, `${file.originalname.split(".")[0]}-${Date.now()}${path.extname(file.originalname)}`);
     }
 });
 

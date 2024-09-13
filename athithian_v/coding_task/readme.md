@@ -16,10 +16,9 @@
    ```
 
 5. Make sure to create a database in mysql named doc_share
-6. To create Mysql Migration file - `npm run generate`
-7. To apply migration to database - `npm run migrate`
-8. To run in developer mode - `npm run dev`
-9. Visit [http\\:localhost:3000/api-doc](http://localhost:3000/api-doc/) for API documentation.
+6. To apply migration to database - `npm run migrate`
+7. To run in developer mode - `npm run dev`
+8. Visit [http\\:localhost:3000/api-doc](http://localhost:3000/api-doc/) for API documentation.
 
 ## Implementation:
 

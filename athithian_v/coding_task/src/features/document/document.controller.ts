@@ -9,12 +9,15 @@ export default class DocumentController{
 
     create = async (req:AuthorizedRequest, res:Response, next:NextFunction):Promise<void>=>{
         const userId = Number(req.user?.userId);
-        const filePath = path.join("public", "files", req.file?.originalname as string);
-        try {
+        const filename = req.file?.filename as string;
+        const filePath = path.join("public", "files", filename)
 
+        try {
+            
             const data = {
               name: req.body.name as string,
-              url: filePath,
+              url: `document/view/${filename}`,
+              path: filePath,
               fileType: req.file?.mimetype as string,
               size: req.file?.size as number,
               ownerId: userId,
@@ -27,16 +30,19 @@ export default class DocumentController{
             
         } catch (error) {
           deleteFile(filePath);
-          next(error);  
+          next(error);
         }
     }
 
     edit = async (req:AuthorizedRequest, res:Response, next:NextFunction):Promise<void>=>{
-            const filePath = path.join("public", "files", req.file?.originalname as string);
+
+        const filename = req.file?.filename as string;
+        const filePath = path.join("public", "files", filename)
+
         try {
             const {docId, details} = req.body;
             const userId = Number(req.user?.userId);
-            await DocumentRepository.edit(userId, docId, filePath, details);
+            await DocumentRepository.edit(userId, docId, filePath, details, `document/view/${filename}`);
             res.status(201).json({success:true, message: `Document:${docId} edited by User:${userId}`});
         } catch (error) {
           deleteFile(filePath);
@@ -58,8 +64,8 @@ export default class DocumentController{
     view = async (req:AuthorizedRequest, res:Response, next:NextFunction):Promise<void>=>{
       try {
         const userId = Number(req.user?.userId);
-        const docId = Number(req.params.docId);
-        await DocumentRepository.view(userId, docId);
+        const docId = Number(req.query.docId);
+        const url = await DocumentRepository.view(userId, docId);
         next();
       } catch (error) {
         next(error);

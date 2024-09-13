@@ -19,7 +19,7 @@ export default class UserController{
             const email:string = req.body.email;
             const password:string = req.body.password;
             const token = await UserRepository.login(email, password);
-            res.status(200).cookie("token", token, {secure:true, httpOnly: true, sameSite: "strict", maxAge: 3600000}).json({token});
+            res.status(200).cookie("token", token, {secure:true, httpOnly: true, sameSite: "strict", maxAge: 3600000}).send(token);
         } catch (error) {
             next(error);
         }

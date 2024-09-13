@@ -7,6 +7,7 @@ export const document = mysqlTable("document", {
 	ownerId: int("owner_id").references(()=>user.id).notNull(),
 	name: varchar("name", { length: 255 }).notNull(),
 	url: varchar("url", { length: 255 }).notNull(),
+	path: varchar("path", { length: 255 }).notNull(),
 	fileType: varchar("file_type", { length: 50 }),
 	size: bigint("size", { mode: "number" }),
 	createdAt: timestamp("created_at").defaultNow(),
