@@ -2,14 +2,15 @@ import { NextFunction, Response } from "express";
 import { AuthorizedRequest } from "../../types/authorizedRequest";
 import path from "path";
 import DocumentRepository from "./document.repository";
+import { deleteFile } from "../../util/deleteFile";
 
 
 export default class DocumentController{
 
     create = async (req:AuthorizedRequest, res:Response, next:NextFunction):Promise<void>=>{
+        const userId = Number(req.user?.userId);
+        const filePath = path.join("public", "files", req.file?.originalname as string);
         try {
-            const userId = Number(req.user?.userId);
-            const filePath = path.join("public", "files", req.file?.originalname as string);
 
             const data = {
               name: req.body.name as string,
@@ -25,18 +26,20 @@ export default class DocumentController{
             res.status(201).json({success:true, message: "New Document created", document: record});
             
         } catch (error) {
+          deleteFile(filePath);
           next(error);  
         }
     }
 
     edit = async (req:AuthorizedRequest, res:Response, next:NextFunction):Promise<void>=>{
+            const filePath = path.join("public", "files", req.file?.originalname as string);
         try {
             const {docId, details} = req.body;
-            const filePath = path.join("public", "files", req.file?.originalname as string);
             const userId = Number(req.user?.userId);
             await DocumentRepository.edit(userId, docId, filePath, details);
             res.status(201).json({success:true, message: `Document:${docId} edited by User:${userId}`});
         } catch (error) {
+          deleteFile(filePath);
           next(error);  
         }
     }

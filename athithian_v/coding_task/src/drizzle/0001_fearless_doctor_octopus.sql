@@ -1,2 +1,0 @@
-ALTER TABLE `change` ADD `version_id` int;--> statement-breakpoint
-ALTER TABLE `change` ADD CONSTRAINT `change_version_id_Version_id_fk` FOREIGN KEY (`version_id`) REFERENCES `Version`(`id`) ON DELETE no action ON UPDATE no action;

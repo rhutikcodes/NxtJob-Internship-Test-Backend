@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.3",
     "info": {
-      "title": "Doc-o",
+      "title": "Doc-Share",
       "description": "Real Time Documnet Editor API",
       "version": "1.0.0",
       "contact": {
@@ -18,6 +18,7 @@
       "/user/register": {
         "post": {
           "summary": "Register a new user",
+          "tags": ["User"],
           "requestBody": {
             "required": true,
             "content": {
@@ -47,6 +48,7 @@
       },
       "/user/login": {
         "post": {
+          "tags": ["User"],
           "summary": "Login a user",
           "requestBody": {
             "required": true,
@@ -90,7 +92,7 @@
       },
 
 
-      "/create": {
+      "/document/create": {
         "post": {
           "summary": "Create a new document",
           "description": "Creates a new document with a file upload.",
@@ -105,10 +107,18 @@
                     "file": {
                       "type": "string",
                       "format": "binary",
-                      "description": "File to Upload for Document creation",
-                      "required": ["file"]
+                      "description": "File to Upload for editing Document"
+                    },
+                    "name": {
+                      "description": "Name of the document",
+                      "type": "string"
+                    },
+                    "description": {
+                      "description": "description of the document",
+                      "type": "string"
                     }
-                  }
+                  },
+                  "required": ["file", "name", "details"]
                 }
               }
             }
@@ -134,7 +144,7 @@
         }
       },
 
-      "/edit": {
+      "/document/edit": {
         "patch": {
           "summary": "Edit an existing document",
           "description": "Edit a document by providing a document ID, details, and optionally a file.",
@@ -190,7 +200,7 @@
         }
       },
 
-      "/{docId}": {
+      "/document/{docId}": {
         "delete": {
           "summary": "Delete a document",
           "description": "Deletes a document by its ID.",
@@ -220,10 +230,11 @@
           }
         }
       },
-      "/set-permission": {
+      "/document/set-permission": {
         "get": {
           "summary": "Set Permission for a Document",
           "description": "Sets permission for a user to specific document.",
+          "tags": ["Document"],
           "parameters": [
             {
               "name": "permission",

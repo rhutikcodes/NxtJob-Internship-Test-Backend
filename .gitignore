@@ -3,3 +3,6 @@ node_modules
 logs
 public/files/*
 dist
+*.sql
+**/public/files/*
+**/meta/

@@ -4,6 +4,7 @@ import * as path from 'path';
 const logDir = path.join('logs');
 const errorLogPath = path.join(logDir, 'error.log');
 const appLogPath = path.join(logDir, 'app.log');
+const filesPath = path.join("public", "files");
 
 // Function to ensure a file exists
 function ensureFileExists(filePath: string) {
@@ -24,6 +25,7 @@ function ensureDirectoryExists(dirPath: string) {
 
 export function createLogDirectory():void{
     ensureDirectoryExists(logDir);
+    ensureDirectoryExists(filesPath);
     ensureFileExists(errorLogPath);
     ensureFileExists(appLogPath);
 }
