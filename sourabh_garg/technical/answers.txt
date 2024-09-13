@@ -1,11 +1,20 @@
 1.  Explain, in your own words, the importance of data consistency in real-time applications.
-->
+
+-> consistency means data is same over server, let suppose we have many server, and data is copied to each server,
+if one server have diff data and other have different then it will make it insconsitent.
+then data is usleass its currupted now
+
 
 2. How do you handle concurrency issues in a multi-user environment?
-->
+->In a multi-user environment, transactions provide a way to maintain consistency of the database.By using transactions,database operations are treated as a single unit.It helps in preventing interference of operations.Consistency, durability and isolation are required for a lossless transaction.
+
 
 3. Describe a scenario where you had to optimize database queries for better performance.
-->
+->Added Indexes: One of the major optimizations was creating the right indexes. I noticed that queries involving fields like user_id, document_id, and permissions were not indexed efficiently.
 
 4. Discuss the trade-offs between using WebSockets and HTTP/2 for real-time communication.
 ->
+
+he most appropriate usage for WebSockets is where there is a continuous low-latency data stream in both directions, such as in live chat applications or online gaming. Essentially, they create connections to support continuous data streams, but they can be overly expensive if there are multiple connections at once.It has persistent connections
+
+HTTP/2 is well-suited for situations where multiple simultaneous requests are needed but does not  support bidirectional communication.It helps in improving performance by multiplexing streams over a single connection.Low latency due to multiplexing but may introduce overhead.
