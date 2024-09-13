@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1726219545934,
+      "tag": "0000_motionless_madame_hydra",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1726220695541,
+      "tag": "0001_fearless_doctor_octopus",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1726221014247,
+      "tag": "0002_peaceful_sunspot",
+      "breakpoints": true
+    }
+  ]
+}

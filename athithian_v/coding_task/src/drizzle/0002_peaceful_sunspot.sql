@@ -1,0 +1,1 @@
+ALTER TABLE `Version` MODIFY COLUMN `version` int NOT NULL DEFAULT 1;
