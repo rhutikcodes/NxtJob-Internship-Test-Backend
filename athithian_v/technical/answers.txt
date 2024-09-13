@@ -1,11 +1,22 @@
 1.  Explain, in your own words, the importance of data consistency in real-time applications.
-->
+    -> Data consistency is crucial in real-time applications because it ensures the reliability and accuracy of the system. In a distributed system, where multiple users or processes may interact with the same data simultaneously, maintaining consistency helps avoid confusion and errors.
+
+    -> For example, consider a Google Doc where User X and User Y are both making changes at the same time. If data consistency is not managed properly, their changes might conflict, leading to different versions of the document. This situation is known as inconsistency, where the document reflects two different sets of changes.
+
+    -> To prevent such issues, data consistency mechanisms ensure that all changes are properly synchronized and that users see a single, coherent version of the document. This removes ambiguity, avoids conflicts, and guarantees that the data is accurately and consistently updated for everyone involved. In essence, data consistency helps to keep the system reliable and user-friendly, even in real-time, multi-user environments.
 
 2. How do you handle concurrency issues in a multi-user environment?
-->
+    -> Concurrency can be handled by various methods:
+        - Setting the isolation level. Isolation level can be of "Serializable", "read uncommitted", repeatable read", "read commit". Serializable being the most strict level, does not allow Dirty read, non repeatable read and Phatom read. Read Uncommited being the least strict level allows dirty read.
+        - Locking Resource: When a user is accessing or modifying data, the same data must be locked such that other users cannot make any change.
+        - Version Controlling: Maintaining the versions of every updates that the user makes and resolving the conflict between the updates and saving the most recent update.
 
 3. Describe a scenario where you had to optimize database queries for better performance.
-->
+    -> Once I was working on the real time chatting application. In that application there was a feature to get all users details with some search keyword. So the query is like this: It search for all the users with username matching with keyword.
+    -> This query was slow. So I used indexing based on username for fast accessing of data using username. 
 
 4. Discuss the trade-offs between using WebSockets and HTTP/2 for real-time communication.
-->
+    -> In HTTP/2, multiple request and response is make over single TCP connection. Since this work in request - response model this cannot be used in real time application.
+    -> While WebSockets lets user to make full duplex communication which is highly used for real time application like chatting application. But maintaining connection in websockets are resource consuming.
+
+
