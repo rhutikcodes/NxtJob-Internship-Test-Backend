@@ -1,0 +1,23 @@
+{
+  "name": "coding_task",
+  "version": "1.0.0",
+  "description": "Coding Task For NxtJob Internship",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.ts",
+    "build": "npx tsc",
+    "start": "node dist/src/index.js",
+    "generate": "npx drizzle-kit generate",
+    "migrate": "npx drizzle-kit migrate"
+  },
+  "author": "Athithian",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.20.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.2"
+  }
+}
