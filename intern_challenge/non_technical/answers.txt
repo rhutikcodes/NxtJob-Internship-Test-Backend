@@ -1,0 +1,17 @@
+
+1. How do you stay updated on backend development topics and remain active in the community? (Forums/Discord/Slack/Meetups/Twitter/Blogs)
+->There are few ways that i use to stay updated on any topics that are related to my tech stack and till now most helpfull way is that i have
+  joind few groups(community) on facebook that has many members with same interest in technology, where we share info with each other to stay 
+  updated on what's new in the market. and there are other ways also like youtube, twitter(X), stackoverflow, even i use instagram to get to know
+  new things about technology.
+
+2. What are your most-used IDE and keyboard shortcuts when coding?
+-> Ctrl + P,  Ctrl + D, Ctrl + Shift + L, Alt + Click, Ctrl + Click, Ctrl + Shift + P, Ctrl + /, Ctrl + B
+
+
+3. How do you approach the design and implementation of a scalable backend system? Feel free to attach code snippets for better explanation.
+->first i will try to understand the problem or the requirements, then i will go with what things to work with, like technologies for example
+ database like MongoDB, PostgreSql, runtime environment like i use Node.js, for framework i have used Express.js, then i focus on how my backend 
+ will be divided i use MVC(model, view , controller) where there will be separate folder for routes, for models, Logic(controller), so if these are
+ independent to eachother in terms of updating or making any changes then we can easily scale these components. also we can use caching like i have used redis 
+ to reduce the load from database.

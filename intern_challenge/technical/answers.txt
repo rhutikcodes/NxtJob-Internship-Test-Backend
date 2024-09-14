@@ -1,0 +1,30 @@
+1.  Explain, in your own words, the importance of data consistency in real-time applications.
+->Let’s take Collab-Doc-Editor, the collaborative document editor I built, as an example. Imagine 
+you and your team are editing the same document in real time. Every change—whether it’s text edits or 
+formatting—is instantly reflected across all users without anyone needing to refresh the page.
+
+This real-time data consistency ensures that no one's work is overwritten, and every update appears 
+seamlessly for all collaborators. If two people edit simultaneously, both changes are merged without conflict,
+keeping the document accurate and in sync for everyone. This is the core importance of data consistency in real-time
+applications like CollabDoc—it ensures smooth, collaborative editing without delays or errors
+
+2. How do you handle concurrency issues in a multi-user environment?
+->In the collaborative document editor project, we can handle concurrency 
+by using optimistic locking, which allows multiple users to edit the same document 
+at the same time. We can ensured that updates from different users were sent in real-time, 
+and any conflicts (like two users editing the same line) were detected early. To manage this,
+I'll prioritized changes based on the order they were received, and if conflicts occurred, 
+the app would notify users and suggest merging edits.
+
+3. Describe a scenario where you had to optimize database queries for better performance.
+->In my social media app project, I encountered performance issues related to slow database queries, 
+especially when retrieving frequently accessed data such as user profiles, posts, and comments. 
+To address this, I implemented Redis as a caching layer to optimize database query performance. And to reduce the load from main database.
+
+4. Discuss the trade-offs between using WebSockets and HTTP/2 for real-time communication.
+->When deciding between WebSockets and HTTP/2 for real-time communication, it depends on the use case. 
+WebSockets are great for continuous, low-latency updates like in a chat app or a collaborative tool, 
+where you need a constant flow of data. They maintain a persistent connection but can be trickier to 
+scale. On the other hand, HTTP/2 enhances efficiency with features like multiplexing, making it better 
+for handling lots of simultaneous requests, but it’s not ideal for constant real-time updates. So, for 
+continuous, real-time data, WebSockets win, while HTTP/2 shines in optimizing multiple requests.

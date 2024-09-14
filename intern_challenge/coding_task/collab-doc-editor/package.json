@@ -1,0 +1,26 @@
+{
+	"name": "collab-doc-editor",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"dev": "wrangler dev",
+		"start": "wrangler dev",
+		"deploy": "wrangler deploy",
+		"test": "vitest"
+	},
+	"devDependencies": {
+		"@cloudflare/vitest-pool-workers": "^0.4.5",
+		"vitest": "1.5.0",
+		"wrangler": "^3.60.3"
+	},
+	"dependencies": {
+		"@clerk/clerk-sdk-node": "^5.0.35",
+		"@prisma/client": "^5.19.1",
+		"bcrypt": "^5.1.1",
+		"drizzle-orm": "^0.33.0",
+		"hono": "^4.5.11",
+		"prisma": "^5.19.1",
+		"ws": "^8.18.0"
+	}
+}

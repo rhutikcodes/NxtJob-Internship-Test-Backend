@@ -1,0 +1,25 @@
+name = "collab-doc-editor"
+main = "src/index.js" # Your entry point
+compatibility_date = "2024-09-11"
+
+# Development server mode
+workers_dev = true
+
+# Define compatibility flags
+compatibility_flags = ["nodejs_compat"]
+
+# Define KV Namespace
+kv_namespaces = [
+  { binding = "MY_NAMESPACE_BINDING", id = "your-kv-namespace-id" }
+]
+
+# Routes (if applicable)
+route = { pattern = "yourdomain.com/*", zone_name = "yourdomain.com" }
+
+[env.staging]
+name = "collab-doc-editor-staging"
+route = { pattern = "staging.yourdomain.com/*", zone_name = "yourdomain.com" }
+
+kv_namespaces = [
+  { binding = "MY_NAMESPACE_BINDING", id = "your-staging-kv-namespace-id" }
+]
