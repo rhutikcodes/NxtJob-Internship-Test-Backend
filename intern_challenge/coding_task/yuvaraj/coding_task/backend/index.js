@@ -5,8 +5,9 @@ import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 
 import router from "./src/user/routes/user.routes.js";
+import { errorHandleMiddleware, handleUncaughtError } from "./middleware/errorHandleMiddleware.js";
 
-// configure the .env file.
+// Configure the .env file.
 dotenv.config({ path: "./.env" })
 
 const app = express();
@@ -23,6 +24,18 @@ app.use(cookieParser());
 // Configure the routes.
 app.use("/api/user", router);
 
+// Default path.
+app.get("/", (req, res) => {
+    res.status(200).send("Welcome to our login server.");
+});
 
+// Error handle middleware.
+app.use(errorHandleMiddleware);
+
+// 404 API handler
+app.use((req, res) => {
+    console.log(handleUncaughtError());
+    res.status(503).send("You are in invalid API route");
+});
 
 export default app;

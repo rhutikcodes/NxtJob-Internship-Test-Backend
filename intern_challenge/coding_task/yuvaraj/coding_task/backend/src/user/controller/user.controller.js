@@ -1,7 +1,13 @@
 
 
 export const createNewUser = async (req, res, next) => {
-    
+    try {
+        
+    } catch (error) {
+        if (error.name === "MongoServerError" && error.code === 11000) {
+            return next()
+        }
+    }
 }
 
 export const userLogin = async (req, res, next) => {
