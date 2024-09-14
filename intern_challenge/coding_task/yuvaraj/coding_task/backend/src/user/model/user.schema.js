@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import validator from "validator";
+import jwt from "jsonwebtoken";
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -15,10 +16,15 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: [true, "Please Enter a password."],
-        minLength: [2, "name should have atleast 2 charcters"],
-        maxLength: [20, "user name can't exceed 30 characters"],
     }
 })
 
-const userModel = mongoose.model("NxtJob", userSchema);
-export default userModel;
+// JWT Token
+userSchema.methods.getJWTToken = function () {
+    return jwt.sign({ id: this._id }, process.env.JWT_SCERET, {
+        expiresIn: process.env.JWT_EXPIRES,
+    });
+};
+
+const UserModel = mongoose.model("NxtJob", userSchema);
+export default UserModel;
