@@ -1,4 +1,5 @@
 1.  Explain, in your own words, the importance of data consistency in real-time applications.
+<<<<<<< HEAD
 ->Let’s take Collab-Doc-Editor, the collaborative document editor I built, as an example. Imagine 
 you and your team are editing the same document in real time. Every change—whether it’s text edits or 
 formatting—is instantly reflected across all users without anyone needing to refresh the page.
@@ -28,3 +29,15 @@ where you need a constant flow of data. They maintain a persistent connection bu
 scale. On the other hand, HTTP/2 enhances efficiency with features like multiplexing, making it better 
 for handling lots of simultaneous requests, but it’s not ideal for constant real-time updates. So, for 
 continuous, real-time data, WebSockets win, while HTTP/2 shines in optimizing multiple requests.
+=======
+->
+
+2. How do you handle concurrency issues in a multi-user environment?
+->
+
+3. Describe a scenario where you had to optimize database queries for better performance.
+->
+
+4. Discuss the trade-offs between using WebSockets and HTTP/2 for real-time communication.
+->
+>>>>>>> origin/main
