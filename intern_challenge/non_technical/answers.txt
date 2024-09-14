@@ -1,9 +1,33 @@
 
 1. How do you stay updated on backend development topics and remain active in the community? (Forums/Discord/Slack/Meetups/Twitter/Blogs)
-->
+To stay updated on backend development topics, 
+    1. Fourms and Communities:
+        1. Stack Overflow: Great for finding solutions to specific problems, contributing, and seeing what challenges others face.
+        2. Dev.to: A community of developers where I can find articles, discussions, and tutorials.
+    2. Discord:
+        1. Backend Development Discord Channels: Devcord, CodeSupport are the dedicated backend discord servers to discuss more topics about the backend development.
+    3. Meetup:
+        1. Meetup.com: I always active in meetup.com to find best meetup spots near by my location.
+    4. Blogs and Newsletters:
+        1. Sign up for weekly newsletters like Node Weekly, Backend Weekly, or Dev Digest.
 
 2. What are your most-used IDE and keyboard shortcuts when coding?
-->
+Most used and favourite IDE is VS Code.
+    1. ctrl + p : Quick file search, great for quickly navigating files in large projects.
+    2. ctrl + shift + f : Global search across files.
+    3. crtl + / : For commenting and uncommenting.
+    4. crtl + shift + k : Delete an entire line.
+    5. F2 : Rename file or folder.
+    6. alt + click : Create multiple cursors, letting you type in multiple places simultaneously.
+    7. ctrl + c : To copy.
+    8. ctrl + p : To paste.
 
 3. How do you approach the design and implementation of a scalable backend system? Feel free to attach code snippets for better explanation.
-->
+    1. Architectural Decisions:
+        I usually start by choosing an architecture that suits the application’s growth potential. For instance, I prefer microservices for large, evolving systems because they allow independent scaling of services, whereas a monolithic architecture can be effective for simpler systems. I also incorporate load balancing to distribute incoming traffic across multiple servers for high availability.
+    2. Asynchronous Processing:
+        For handling large loads efficiently, I incorporate message brokers like RabbitMQ or Kafka to offload tasks to background services, ensuring the system remains responsive.
+
+    3. Caching & Performance Optimization:
+        I integrate caching strategies using tools like Redis to minimize database hits and reduce response times, improving performance significantly.
+    
