@@ -1,11 +1,69 @@
 1.  Explain, in your own words, the importance of data consistency in real-time applications.
-->
+Data consistency in real-time applications is crucial because it ensures that all users and systems interacting with the application have access to the same, accurate data at any given moment. In real-time systems where multiple users are collaborating or making changes simultaneously (e.g., a document editor, live stock trading platforms), data consistency prevents conflicts, duplication, or errors in the information presented to users.
+
+Here's why it's essential:
+    1. User Experience.
+    2. Data Integrity.
+    3. Business Logic Reliability.
+    4. Concurrency Handling.
 
 2. How do you handle concurrency issues in a multi-user environment?
-->
+    1. Optimistic Locking:
+        What it is: Optimistic locking assumes that multiple transactions can complete without conflicting, and only checks for conflicts when data is being written.
+        How it works: When a user retrieves data to edit, a version number or timestamp is also retrieved. Before saving the changes, the system checks if the version number has changed. If it has, it means another user has modified the data, and a conflict is raised.
+        Use Case: Useful when conflicts are rare, such as collaborative document editing or updating user profiles.
+    2. Versioning:
+        What it is: Keeping different versions of data allows for concurrent updates without overwriting one another’s changes.
+        How it works: When multiple users modify a resource, each modification is treated as a new version. You can implement merging strategies, such as last-write-wins, or provide conflict resolution mechanisms to users.
+        Use Case: Document management systems (like Git), collaborative editing tools (like Google Docs).
+    3. Queueing & Task Scheduling
+        What it is: Tasks that conflict are queued and processed sequentially to prevent overlapping updates.
+        How it works: Use message queues (e.g., RabbitMQ, Kafka) to serialize access to critical resources, ensuring that only one task modifies the resource at a time.
+        Use Case: Inventory management, booking systems, or scenarios where serialized task execution is critical.
+    4. Eventual Consistency
+        What it is: Eventual consistency allows the system to propagate changes across distributed systems with the understanding that data may be temporarily inconsistent.
+        How it works: Changes are replicated asynchronously across systems. The system becomes consistent after a certain period, but in the short term, discrepancies might exist.
+        Use Case: Distributed databases (like DynamoDB), microservices environments.
 
 3. Describe a scenario where you had to optimize database queries for better performance.
-->
+Scenario:
+I was working on a project management system where users could manage tasks, projects, and team collaborations. As the application grew, users started reporting performance issues, especially on the dashboard where a large number of tasks and projects were displayed. The page load time was slow, particularly due to multiple inefficient database queries that were executed on every page load.
+
+Issue:
+The dashboard retrieved a list of projects, each containing tasks and user assignments. Initially, the application was using N+1 query problems—a separate query for each project and its associated tasks and users. This resulted in a huge number of database queries (N+1 problem), significantly impacting performance, especially as the number of projects increased.
+
+    1. Identify Slow Queries.
+    2. Use Eager Loading to Reduce N+1 Problem.
+    3. Add Indexing.
+    4. Pagination.
+    5. Caching Results.
 
 4. Discuss the trade-offs between using WebSockets and HTTP/2 for real-time communication.
-->
+When deciding between WebSockets and HTTP/2 for real-time communication, it’s essential to understand their trade-offs in terms of performance, complexity, and specific use cases.
+
+1. WebSockets:
+WebSockets provide a full-duplex communication channel over a single, long-lived connection. This makes them highly efficient for real-time, low-latency interactions.
+
+Advantages of WebSockets:
+    1. Full-Duplex Communication
+    2. Lower Latency
+    3. Efficient for High-Frequency Updates
+    4. Lower Overhead
+
+Disadvantages of WebSockets:
+    1. Complexity
+    2. Less Standardized for Firewalls and Proxies
+    3. Scalability
+
+2. HTTP/2:
+HTTP/2 is an evolution of HTTP that supports multiplexing and server push, which improves the efficiency of web communication, particularly for traditional request-response architectures.
+
+Advantages of HTTP/2:
+    1. Multiplexing
+    2. Server push
+    3. Backward Compatibility
+    4. Ease of Implementation
+
+Disadvantages of HTTP/2:
+    1. Request-Response Model
+    2. Latency in Real-Time Scenarios
