@@ -3,6 +3,7 @@ import { AuthorizedRequest } from "../../types/authorizedRequest";
 import path from "path";
 import DocumentRepository from "./document.repository";
 import { deleteFile } from "../../util/deleteFile";
+import ApplicationError from "../../middleware/errorHandler";
 
 
 export default class DocumentController{
@@ -52,6 +53,8 @@ export default class DocumentController{
 
     delete = async (req:AuthorizedRequest, res:Response, next:NextFunction):Promise<void>=>{
         try {
+          console.log(req.user);
+          
           const userId = Number(req.user?.userId);
           const docId = Number(req.params.docId);
           await DocumentRepository.delete(userId, docId);
@@ -63,9 +66,12 @@ export default class DocumentController{
 
     view = async (req:AuthorizedRequest, res:Response, next:NextFunction):Promise<void>=>{
       try {
+        if(!req.query.docId){
+          throw new ApplicationError(400, "Documnet Id must be passed a Query Parameter");
+        }
         const userId = Number(req.user?.userId);
         const docId = Number(req.query.docId);
-        const url = await DocumentRepository.view(userId, docId);
+        await DocumentRepository.view(userId, docId);
         next();
       } catch (error) {
         next(error);
@@ -77,7 +83,7 @@ export default class DocumentController{
         const owner = Number(req.user?.userId);
         const {docId, permission, userId} = req.query;
         await DocumentRepository.setPermission(owner, Number(userId), Number(docId), permission as string);
-        next();
+        res.status(201).json({success:true, message:`${permission} Access to Document:${docId} is given to user:${userId}`})
       } catch (error) {
         next(error);
       }

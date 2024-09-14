@@ -21,9 +21,9 @@ type Document = {
 export default class DocumentRepository{
 
     private static checkDoc = async(docId:number)=>{
-        const doc = await db.select({id:document.id, owner:document.ownerId, url: document.url}).from(document).where(eq(document.id, docId));
+        const doc = await db.select({id:document.id, owner:document.ownerId, url: document.url, path: document.path}).from(document).where(eq(document.id, docId));
 
-        if(doc.length<0){
+        if(doc.length<=0){
             throw new ApplicationError(400, `Document:${docId} Does not exists`);
         }
 
@@ -67,7 +67,7 @@ export default class DocumentRepository{
     static edit = async (userId:number, docId:number, filePath:string, details:string, url:string):Promise<void>=> {
         try {
 
-            await this.checkDoc(docId);
+            const doc = await this.checkDoc(docId);
 
             if (!details) {
                 throw new ApplicationError(400, 'Invalid input: details are missing');
@@ -83,7 +83,12 @@ export default class DocumentRepository{
                     )
                 );
 
-            if(permit.length===0 || permit[0].permission!=='edit'){
+            console.log(doc[0].owner);
+            console.log(userId);
+            
+            
+
+            if(doc[0].owner!==userId && (permit.length===0 || permit[0].permission!=='edit')){
                 throw new ApplicationError(400, `User:${userId} is not allowed to edit Document:${docId}`)
             }
 
@@ -123,7 +128,7 @@ export default class DocumentRepository{
 
     static delete = async (userId:number, docId:number) => {
         try {
-            const doc:{id:number, owner:number}[] = await this.checkDoc(docId);
+            const doc= await this.checkDoc(docId);
 
             if(doc[0].owner!==userId){
                 throw new ApplicationError(400, `User:${userId} is not the owner of Documnet:${docId}`)
@@ -147,7 +152,8 @@ export default class DocumentRepository{
         }
     }
 
-    static view = async (userId:number, docId:number):Promise<string>=>{
+    static view = async (userId:number, docId:number):Promise<void>=>{
+
         const doc = await this.checkDoc(docId);
 
         const permit = await db
@@ -158,14 +164,11 @@ export default class DocumentRepository{
                         eq(permission.userId, userId),
                         eq(permission.docId, docId)
                     )
-                );
-        
+                );                
 
         if(permit.length===0 && doc[0].owner!==userId){
-            throw new ApplicationError(400, `User:${userId} is not allowed to view Document:${docId}`);
+            throw new ApplicationError(400, `User:${userId} is does not have view access to Document:${docId}`);
         }
-
-        return doc[0].url;
     }
 
     static setPermission = async (owner:number, userId:number, docId:number, permit:string) => {
@@ -181,6 +184,24 @@ export default class DocumentRepository{
             throw new ApplicationError(400, "Invalid Input: Permission can either be 'edit' or 'view'")
         }
 
-        await db.insert(permission).values({docId,userId,permission: permit});
+        const permissionRecord = await db
+            .select()
+            .from(permission)
+            .where(
+                and(
+                    eq(permission.docId, docId),
+                    eq(permission.userId, userId)
+                )
+            );
+
+        if(permissionRecord.length!==0){
+            if(permissionRecord[0].permission!==permit){
+                await db.update(permission).set({permission: permit});
+            }else{
+                throw new ApplicationError(400, `User:${userId} already have ${permit} access to Document:${docId}`)
+            }
+        }else{
+            await db.insert(permission).values({docId,userId,permission: permit});
+        }
     }
 }

@@ -120,7 +120,7 @@
                       "type": "string"
                     }
                   },
-                  "required": ["file"]
+                  "required": ["file", "name"]
                 }
               }
             }
@@ -147,7 +147,7 @@
       },
 
       "/document/edit": {
-        "patch": {
+        "put": {
           "summary": "Edit an existing document",
           "description": "Edit a document by providing a document ID, details, and optionally a file.",
           "operationId": "editDocument",

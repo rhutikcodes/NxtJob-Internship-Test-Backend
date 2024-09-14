@@ -8,7 +8,7 @@ export default class UserController{
         try {
             const data:User = req.body;
             const newUser = await UserRepository.register(data);
-            res.status(201).send(newUser);
+            res.status(201).json({success:true, message: `User with username: ${newUser.username} is created`, newUser});
         } catch (error) {
             next(error);
         }

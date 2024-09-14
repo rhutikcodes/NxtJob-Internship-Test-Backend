@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { errorLogger } from "../util/logger";
+import { consoleLogger, errorLogger } from "../util/logger";
 
 export default class ApplicationError extends Error{
     code:number;
@@ -14,13 +14,13 @@ export default class ApplicationError extends Error{
 
 export const errorHandler = (err:Error, req:Request, res:Response, next:NextFunction) => {
 
-    errorLogger.error(err);
-    console.log(err);
 
-    if(err instanceof ApplicationError){
-        res.status(err.code).send(err.message);
-        return;
+    if(err instanceof ApplicationError){    
+        errorLogger.error(err.message);   
+        res.status(err.code).json({success: false, message: err.message});
+    }else{
+        errorLogger.error(err.stack);
+        consoleLogger.error(err.stack);
+        res.status(500).json({success: false, message: "Unknown error Occured"});
     }
-
-    res.status(500).send("Unknown error Occured");
 }

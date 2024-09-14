@@ -38,6 +38,5 @@ export const consoleLogger = createLogger({
 export const errorLogger = createLogger({
     transports: [
         new transports.File({filename: "./logs/error.log", format: fileFormat}),
-        new transports.Console({format: consoleFormat})
     ]
 })

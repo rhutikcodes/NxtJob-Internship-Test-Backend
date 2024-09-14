@@ -18,7 +18,7 @@
 5. Make sure to create a database in mysql named doc_share
 6. To apply migration to database - `npm run migrate`
 7. To run in developer mode - `npm run dev`
-8. Visit [http\\:localhost:3000/api-doc](http://localhost:3000/api-doc/) for API documentation.
+8. Visit [http://localhost:3000/api-doc](http://localhost:3000/api-doc/) for API documentation.
 
 ## Implementation:
 
@@ -60,8 +60,14 @@
       - All files are deleted with the collected URL.
 
    4. **/document/set-permission/{docId}:$\color{blue}[Get]$**
+
       - Only owner of the file can perform this action.
       - Permission for the use is set.
+
+   5. **/document/view/:$\color{blue}[Get]$**
+      - In order to view the document, the document ID must be passed as query Parameter.
+      - Then the permission check is done, the logged in user must either be the owner of the file or must have permission to view/edit.
+      - Then the file is served to the user after permission check.
 
 # Coding Task
 

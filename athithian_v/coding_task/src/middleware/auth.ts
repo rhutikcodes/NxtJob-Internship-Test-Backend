@@ -5,9 +5,10 @@ import { AuthorizedRequest } from "./../types/authorizedRequest";
 
 export const authenticate  = (req:AuthorizedRequest, res:Response, next:NextFunction)=>{
     const token = req.cookies.token || req.header('Authorization');
+    
 
     if(!token){
-        return res.status(400).json("Unauthorized, Log in to Continue");
+        return res.status(400).send("<h1>Unauthorized, Log in to Continue</h1>");
     }
 
     const secretKey = process.env.SECRET_KEY;    

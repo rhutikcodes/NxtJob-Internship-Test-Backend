@@ -64,7 +64,7 @@ export default class UserRepository{
             }
 
             const record = await db.select().from(user).where(eq(user.email, email));
-            if(!record){
+            if(record.length<=0){
                 throw new ApplicationError(400, "Wrong Username/Password");
             }
             
