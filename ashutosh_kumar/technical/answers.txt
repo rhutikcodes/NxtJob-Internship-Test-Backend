@@ -1,0 +1,35 @@
+1.  Explain, in your own words, the importance of data consistency in real-time applications.
+->  Imagine I’m playing an online game with my friends. Data consistency is like making sure we all see the same game at the same time. If one of us sees something different, it can mess up the game.
+So, in real-time apps, data consistency makes sure that when I send a message or do something, everyone else sees it correctly and at the same time. If we don’t have this, things can get confusing or not work right. To keep everything smooth and fun, data consistency is really important.
+
+2. How do you handle concurrency issues in a multi-user environment?
+->Handling concurrency issues is like sharing a kitchen with friends. Here’s how I’d make sure everything goes smoothly:
+
+If I’m cooking, I might lock the door so no one else can come in and mess things up. In tech, this means locking data so only one person can make changes at a time.
+
+I’d also follow a recipe carefully. If something goes wrong, I’d start over from scratch. This is like making sure all parts of a task are done correctly or not at all.
+
+I’d keep track of different recipes to know which one I’m using. In tech, this helps manage changes and prevent mix-ups.
+
+Sometimes, I might assume no one else will mess with my cooking and check if there’s a problem only if needed. This is like checking for issues before finishing a task.
+
+Other times, I might lock the kitchen and only let one person in at a time. This is similar to locking data so only one person can make changes at once.
+
+Using these methods helps keep everything running smoothly when sharing a space or working with the same data.
+
+3. Describe a scenario where you had to optimize database queries for better performance.
+->I was working on an app where loading user activity reports was very slow. To speed things up, I:
+Added indexes to help find data faster.
+Improved the way the app searched for information.
+Created summary tables for quick report generation.
+Used caching to store frequently accessed reports.
+
+4. Discuss the trade-offs between using WebSockets and HTTP/2 for real-time communication.
+->WebSockets:
+Pros: Perfect for real-time communication because it lets you send and receive messages instantly.
+Cons: Can be a bit complicated to set up and manage, and starting the connection has some extra steps.
+
+HTTP/2:
+Pros: Speeds up loading web pages by handling multiple requests at once and compressing data.
+Cons: Works best for sending requests and receiving responses, so it’s not ideal for real-time chat or updates.
+In summary, go with WebSockets for real-time conversations and updates, and choose HTTP/2 to make web pages load faster.
