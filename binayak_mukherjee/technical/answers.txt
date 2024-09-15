@@ -1,11 +1,16 @@
 1.  Explain, in your own words, the importance of data consistency in real-time applications.
-->
+-> Data consistency in real-time applications is crucial for ensuring that users receive accurate, reliable, and up-to-date information across the entire system. as we know the main moto behind to build real-time application that multiple users interacting simultaneously.
+
+-> It provides accurate, synchronized data for all users across devices.
+-> It also provides smooth, trustworthy user experience, especially in high-stakes environments like finance, gaming, or collaborative workspaces.
 
 2. How do you handle concurrency issues in a multi-user environment?
-->
+-> Handling concurrency issues in a multi-user environment is tough to ensure that data remains consistent and correct when multiple users access or modify shared resources simultaneously.
+-> Handling concurrency involves a balance between ensuring data consistency and maintaining performance. Optimistic and pessimistic locking, atomic operations, transaction isolation, and conflict resolution mechanisms are the main techniques used to prevent issues such as race conditions, lost updates
 
 3. Describe a scenario where you had to optimize database queries for better performance.
-->
+-> In this project , i haven't optimized the database query operation but we can definitely optimize our database query operation as well by adding indexing fetaure or lets say some data we are requesting from the client side very often so rather than every single time request to database we can store that data on cache and retreive whenver we need.
 
 4. Discuss the trade-offs between using WebSockets and HTTP/2 for real-time communication.
-->
+-> This is completely depends on the type of application we are building
+-> WebSockets allowing bidirectional communication between client and server and provide low-latency. This makes them ideal for highly interactive applications like chat systems or multiplayer games, where low latency and continuous data exchange are demanded where if we talk about HTTP/2 offers multiplexing, which allows multiple streams over a single connection, reducing overhead and improving efficiency, especially for multiple small requests.
