@@ -37,6 +37,8 @@ const QuillEditor = () => {
     ["clean"], // remove formatting button
   ];
 
+  const INTERVAL_MS = 2000;
+
   useEffect(() => {
 
     const s = io.connect("http://localhost:8080");
@@ -120,6 +122,25 @@ const QuillEditor = () => {
     socket.emit("get-document", documentId);
 
   }, [documentId, quillInstance, socket]);
+
+  useEffect(() => {
+
+    if(socket === null || quillInstance === null) return;
+
+    let interval = setInterval(() => {
+          socket.emit("save-document", quillInstance.getContents());
+    }, INTERVAL_MS);
+
+    //clean function when component will unmount
+    return () => {
+
+      clearInterval(interval);
+    }
+
+
+  }, [quillInstance, socket]);
+
+  
   return (
     <ReactQuill
       theme="snow"
