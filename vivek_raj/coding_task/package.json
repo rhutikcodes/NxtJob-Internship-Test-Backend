@@ -1,0 +1,26 @@
+{
+  "name": "coding_task",
+  "version": "1.0.0",
+  "description": "backend task for Nxt.job",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^22.5.4",
+    "@types/ws": "^8.5.12",
+    "nodemon": "^3.1.4",
+    "prisma": "^5.19.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.2",
+    "wrangler": "^3.77.0"
+  },
+  "dependencies": {
+    "@clerk/nextjs": "^5.5.2",
+    "@prisma/client": "^5.19.1",
+    "websocket": "^1.0.35",
+    "ws": "^8.18.0"
+  }
+}
