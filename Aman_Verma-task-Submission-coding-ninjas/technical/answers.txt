@@ -1,0 +1,26 @@
+1.  Explain, in your own words, the importance of data consistency in real-time applications.
+=>  Data consistency is vital in real-time systems as it ensures system reliability and data accuracy.
+ In distributed systems, where multiple processes or users may modify the same data simultaneously, consistency prevents confusion and errors.
+
+=>For instance, in a Google Doc scenario, where both User X and User Y are editing simultaneously, improper consistency management could result
+ in conflicting changes, causing different versions of the document to emerge. This inconsistency occurs when two conflicting sets
+  of edits are reflected.
+
+=>To prevent such problems, data consistency mechanisms ensure all updates are synchronized so users experience a unified version of the document.
+ This eliminates conflicts, reduces ambiguity, and ensures that data is updated correctly for everyone.
+  Thus, consistency helps maintain system reliability and user satisfaction in real-time, multi-user settings.
+
+2. How do you handle concurrency issues in a multi-user environment?
+    -> Setting Isolation Levels: Isolation levels like "Serializable," "Read Uncommitted," "Repeatable Read," and "Read Committed" control data
+     access. "Serializable," the strictest, prevents dirty reads, non-repeatable reads, and phantom reads, while "Read Uncommitted," the 
+     least strict, permits dirty reads.
+
+3. Describe a scenario where you had to optimize database queries for better performance.
+    -> While developing a payment application, there was a feature to retrieve user details based on a search keyword. The query works by searching for all users whose usernames match the given keyword.
+    -> This query was slow. So I used indexing based on username for fast accessing of data using username. 
+
+4. Discuss the trade-offs between using WebSockets and HTTP/2 for real-time communication.
+    -> In HTTP/2, multiple request and response is make over single TCP connection. Since this work in request - response model this cannot be used in real time application.
+    -> While WebSockets lets user to make full duplex communication which is highly used for real time application like chatting application. But maintaining connection in websockets are resource consuming.
+
+

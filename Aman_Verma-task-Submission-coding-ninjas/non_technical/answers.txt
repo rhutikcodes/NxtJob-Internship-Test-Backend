@@ -1,0 +1,32 @@
+
+1. How do you stay updated on backend development topics and remain active in the community? (Forums/Discord/Slack/Meetups/Twitter/Blogs)
+    -> .
+     For example I recently working  on a Payment application for which I am learning Next.js along the way, in this way I stay updated 
+      on backend development . 
+     I generally use ai tools like blackbox.ai, chatgpt and bard , whenever I get stuck and I also read blogs of Hitesh Chaudhary and other tech 
+     masters.
+
+2. What are your most-used IDE and keyboard shortcuts when coding?
+    -> I use VS code. The various keyboard shortcuts that I use frequently are:
+        1. ctrl + c     -> copy
+        2. ctrl + v     -> paste
+        3.ctrl + D     -> That lets us update same word in different locations.     
+        4. alt + click  -> to create multiple key bind.
+        5. ctrl + B     -> to open and close primary side bar.
+        6. ctrl + N     -> create new file.
+        7. ctrl+shift+N -> open new window.
+        8. ctrl + F     -> to find occurences of a word in a file.
+      
+
+3. How do you approach the design and implementation of a scalable backend system? Feel free to attach code snippets for better explanation.
+           
+            For the Design Part:
+           1.We need to estimate the load.
+           2.We need to set scalability targets.
+           3.We need to establish performance objectives.
+
+
+           =>For the Implementation Part:
+            -> Building microservices, enabling independent scaling for each small service.
+            -> Implementing load balancing to distribute API calls evenly among services.
+            ->Setting  up caching to alleviate database load.
