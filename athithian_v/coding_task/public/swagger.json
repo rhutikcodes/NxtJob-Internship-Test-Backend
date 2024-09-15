@@ -1,0 +1,392 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+      "title": "Doc-Share",
+      "description": "Real Time Documnet Editor API",
+      "version": "1.0.0",
+      "contact": {
+        "email": "athithianpkt2001@gmail.com"
+      }
+    },
+    "security": [
+        {
+            "ApiKeyAuth": []
+        }
+    ],
+    
+    "paths": {
+      "/user/register": {
+        "post": {
+          "summary": "Register a new user",
+          "tags": ["User"],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "User registered successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad request"
+            }
+          }
+        }
+      },
+      "/user/login": {
+        "post": {
+          "tags": ["User"],
+          "summary": "Login a user",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                    "properties": {
+                        "password": {
+                        "type": "string",
+                        "example": "User1Password"
+                        },
+                        "email":{
+                            "type": "string",
+                            "format": "email",
+                            "example": "user1@example.com"
+                        }
+                    },
+                    "required": ["password", "email"]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "User logged in successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Token"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized, invalid credentials"
+            },
+            "400": {
+              "description": "Bad request"
+            }
+          }
+        }
+      },
+
+
+      "/document/create": {
+        "post": {
+          "summary": "Create a new document",
+          "description": "Creates a new document with a file upload.",
+          "operationId": "createDocument",
+          "tags": ["Document"],
+          "requestBody": {
+            "content": {
+              "multipart/form-data": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "file": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "File to Upload for editing Document"
+                    },
+                    "name": {
+                      "description": "Name of the document",
+                      "type": "string"
+                    },
+                    "description": {
+                      "description": "Description of the document",
+                      "type": "string"
+                    }
+                  },
+                  "required": ["file", "name"]
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Document created successfully",
+              "content": {
+                "application/json":{
+                  "schema": {
+                    "$ref": "#/components/schemas/APIResponse"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+
+      "/document/edit": {
+        "put": {
+          "summary": "Edit an existing document",
+          "description": "Edit a document by providing a document ID, details, and optionally a file.",
+          "operationId": "editDocument",
+          "tags": ["Document"],
+          "requestBody": {
+            "content": {
+              "multipart/form-data": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "file": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "File to Upload for editing Document"
+                    },
+                    "docId": {
+                      "description": "Id of Documnet to Edit",
+                      "type": "number",
+                      "format": "int64"
+                    },
+                    "details": {
+                      "description": "Details of changes made in the document",
+                      "type": "string"
+                    }
+                  },
+                  "required": ["file", "docId", "details"]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Document edited successfully",
+              "content": {
+                "application/json":{
+                  "schema": {
+                    "$ref": "#/components/schemas/APIResponse"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "404": {
+              "description": "Document not found"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+
+      "/document/{docId}": {
+        "delete": {
+          "summary": "Delete a document",
+          "description": "Deletes a document by its ID.",
+          "operationId": "deleteDocument",
+          "tags": ["Document"],
+          "parameters": [
+            {
+              "name": "docId",
+              "in": "path",
+              "description": "ID of the document to delete.",
+              "required": true,
+              "schema":{
+                "type": "number"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "Document deleted successfully"
+            },
+            "404": {
+              "description": "Document not found"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/document/set-permission": {
+        "get": {
+          "summary": "Set Permission for a Document",
+          "description": "Sets permission for a user to specific document.",
+          "tags": ["Document"],
+          "parameters": [
+            {
+              "name": "permission",
+              "in": "query",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "enum": ["view", "edit"],
+                "description": "The permission level to set for the document."
+              }
+            },
+            {
+              "name": "docId",
+              "in": "query",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "description": "The ID of the document for which the permission is being set."
+              }
+            },
+            {
+              "name": "userId",
+              "in": "query",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "description": "The ID of the user for whom the permission is being set."
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Permission successfully set",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/APIResponse"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string",
+                        "description": "Details of the error if the request fails."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    
+    "components": {
+      "securitySchemes": {
+        "ApiKeyAuth": {
+            "type": "apiKey",
+            "in": "header",
+            "name": "Authorization"
+        }
+        },
+      "schemas": {
+        "User": {
+          "type": "object",
+          "properties": {
+            "username": {
+              "type": "string"
+            },
+            "password": {
+              "type": "string"
+            },
+            "email":{
+                "type": "string",
+                "format": "email"
+            }
+          },
+          "required": ["username", "password", "email"]
+        },
+        "Document": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "ownerId": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "name": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            },
+            "fileType": {
+              "type": "string"
+            },
+            "size": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string",
+              "enum": ["active", "archived"]
+            }
+          },
+          "required": ["id", "ownerId", "name", "url"]
+        },
+        "APIResponse":{
+          "type": "object",
+          "properties": {
+            "success":{
+              "type": "boolean"
+            },
+            "message":{
+              "type": "string"
+            }
+          },
+          "required": ["token"]
+        },
+        "Token": {
+          "type": "object",
+          "properties": {
+            "token": {
+              "type": "string"
+            }
+          },
+          "required": ["token"]
+        }
+      }
+    } 
+  }
