@@ -1,0 +1,43 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Document {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String
+  ownerId   Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  versions  Version[]
+  collaborators Collaborator[]
+}
+
+model Version {
+  id          Int      @id @default(autoincrement())
+  documentId  Int
+  content     String
+  createdAt   DateTime @default(now())
+  createdById Int
+
+  Document Document[]
+}
+
+model Collaborator {
+  id          Int      @id @default(autoincrement())
+  documentId  Int
+  userId      Int
+  role        CollaboratorRole
+
+  Document Document[]
+}
+
+enum CollaboratorRole {
+  VIEWER
+  EDITOR
+}

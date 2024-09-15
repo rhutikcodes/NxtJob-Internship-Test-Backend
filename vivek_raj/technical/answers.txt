@@ -1,0 +1,25 @@
+1.  Explain, in your own words, the importance of data consistency in real-time applications.
+->  Data consistency in real-time applications is essential for ensuring that all users see the 
+    same, up-to-date information, which enhances user experience and accuracy. It prevents confusion 
+    and errors by synchronizing interactions and resolving conflicts predictably. Maintaining consistency 
+    helps preserve system integrity and trustworthiness.
+
+2. How do you handle concurrency issues in a multi-user environment?
+-> To handle concurrency issues, use optimistic concurrency control with 
+   versioning to detect and resolve conflicts, or pessimistic concurrency 
+   control with locks to prevent simultaneous modifications. Implement conflict 
+   resolution strategies to merge changes or notify users of conflicts.
+
+3. Describe a scenario where you had to optimize database queries for better performance.
+-> In a real-time analytics dashboard project, I optimized database performance by adding 
+   indexes, refactoring complex queries for efficiency, and implementing caching for frequently 
+   accessed data. These improvements led to faster query responses and enhanced application performance.
+
+4. Discuss the trade-offs between using WebSockets and HTTP/2 for real-time communication.
+-> WebSockets offer full-duplex, low-latency communication, making them ideal for real-time 
+   applications requiring bidirectional data transfer, like chat or gaming. However, they can 
+   be complex to implement and manage, and not all older browsers support them. HTTP/2 improves 
+   efficiency with multiplexing over a single connection and uses existing HTTP infrastructure, 
+   making it easier to integrate. However, it’s optimized for request-response patterns and may 
+   not be as efficient for real-time, bidirectional communication as WebSockets. The choice depends 
+   on the specific real-time needs and existing infrastructure.

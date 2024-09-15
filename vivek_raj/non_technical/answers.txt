@@ -1,0 +1,18 @@
+
+1. How do you stay updated on backend development topics and remain active in the community? (Forums/Discord/Slack/Meetups/Twitter/Blogs)
+->Online Courses and Tutorials, Follow Influential Figures and Communities, Read Industry Blogs and Articles, Participate in Forums and Discussions
+
+2. What are your most-used IDE and keyboard shortcuts when coding?
+->For coding, I most commonly use Visual Studio Code (VS Code) due to its versatility, extensibility, and robust support for modern development workflows.
+  Shortcuts that I use most are crl+c and ctrl+v (just kidding) other shortcuts that I use :
+  Ctrl + /: Toggle comments on and off for the selected lines.
+  Ctrl + Shift + F: Search across all files in the project.
+  Alt + Shift + F: Format the current file.
+  Ctrl + `: Open or close the integrated terminal.
+
+3. How do you approach the design and implementation of a scalable backend system? Feel free to attach code snippets for better explanation.
+-> Microservices Architecture
+   Database Scalability
+   Stateless Services
+   Asynchronous Processing
+   Performance Testing
