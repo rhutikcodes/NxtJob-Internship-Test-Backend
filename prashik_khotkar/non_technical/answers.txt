@@ -1,0 +1,9 @@
+
+1. How do you stay updated on backend development topics and remain active in the community? (Forums/Discord/Slack/Meetups/Twitter/Blogs)
+->	I stay active on Twitter/linkedin to follow thought leaders in tech. Apart from that I am connected to my friends who are working so we generally discuss the updated trend. 
+
+2. What are your most-used IDE and keyboard shortcuts when coding?
+-> I use Visual Studio Code because of its speed and flexibility. Ctrl + P (Cmd + P on Mac) to quickly navigate files. 
+
+3. How do you approach the design and implementation of a scalable backend system? Feel free to attach code snippets for better explanation.
+-> The first thing I focus on is breaking down the system into microservices or well-defined layers to ensure modularity. For example, I separate the API layer from the business logic and the data access layer. This allows for easier scaling and better maintainability. I also make sure to use caching like Redis to reduce database load

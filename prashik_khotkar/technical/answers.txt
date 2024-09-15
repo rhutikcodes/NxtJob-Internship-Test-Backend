@@ -1,0 +1,15 @@
+1.  Explain, in your own words, the importance of data consistency in real-time applications.
+->	In real-time applications, consistency means that everyone is seeing the same, up-to-date information at the same time. Imagine using a stock trading app or collaborating on a document with others—if the data isn't consistent, it could lead to confusion, errors, or even financial loss. Maintaining consistency is key to ensuring trust and smooth functionality in any time-sensitive application.
+
+
+2. How do you handle concurrency issues in a multi-user environment?
+->	Handling multiple users at once, or "concurrency," can get tricky because two people might try to edit the same data at the same time. To prevent conflicts, you can use things like locks, versioning, or control how transactions interact. For example, locking a record while it's being updated can prevent others from making changes at the same time, and version control ensures that no one’s updates get overwritten without warning. You also set rules (called isolation levels) in the database to make sure things stay consistent even when multiple actions are happening at once.
+
+
+3. Describe a scenario where you had to optimize database queries for better performance.
+->	In one project, we noticed the system was slowing down when users queried large amounts of data with complex filters. After investigating, I found that the queries were poorly optimized and missing some key indexes. By adding those indexes and adjusting how the queries were written, we drastically improved performance, cutting down response time from several seconds to under a second.
+
+4. Discuss the trade-offs between using WebSockets and HTTP/2 for real-time communication.
+->	WebSockets are great when you need continuous, two-way communication between a server and a user—like in a chat app or a real-time stock feed. Once the connection is established, it stays open, which means less overhead. But they can be a bit heavier to manage, especially if you're scaling to many users.
+
+On the other hand, HTTP/2 is faster than traditional HTTP because it lets you send multiple requests over one connection. It's perfect for apps that don't need constant back-and-forth communication but still benefit from reduced load times. The downside is that HTTP/2 isn't full-duplex like WebSockets, so it's not ideal for highly interactive real-time tasks
