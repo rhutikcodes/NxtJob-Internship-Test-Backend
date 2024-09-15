@@ -32,6 +32,13 @@ io.on("connection", (socket) => {
 
     console.log("connection made");
 
+    socket.on("send-changes", delta => {
+
+        //it will broadcast to all the client that connected to this socket server except us..
+        console.log(delta);
+        socket.broadcast.emit("receive-changes", delta);
+    });
+
     //for disconnection
     socket.on("disconnect", () => console.log("connection disconnected"));
 });

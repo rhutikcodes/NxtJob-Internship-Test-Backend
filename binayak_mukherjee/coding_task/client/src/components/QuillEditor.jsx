@@ -55,6 +55,51 @@ const QuillEditor = () => {
     }
   }, [quillInstance]);
 
+
+  useEffect(() => {
+
+    if(quillInstance == null || socket == null) return;
+
+    quillInstance.on("text-change", (delta, oldDelta, source) => {
+
+      //we want to track only the changes user made not the quill team changes
+      if(source !== "user") return;
+
+      //delta -> not the entire document but the small changes that occur in the document.
+      //delta -> it tracks small small changes what are happening on the editor
+      socket.emit("send-changes", delta);
+
+    });
+
+    // Clean up the listener when the component is unmounted
+    return () => {
+
+      if (quillInstance) {
+        quillInstance.off('text-change'); // Remove the listener
+      }
+    }
+
+  }, [quillInstance, socket]);
+
+
+  useEffect(() => {
+
+    if(quillInstance == null || socket == null) return;
+    
+    socket.on("receive-changes", (delta) => {
+      console.log(delta);
+      quillInstance.updateContents(delta);
+    });
+
+    // Clean up the listener when the component is unmounted
+    return () => {
+
+      socket.off("receive-changes"); // Remove the listener
+    }
+
+  }, [quillInstance, socket]);
+
+
   return (
     <ReactQuill
       theme="snow"
