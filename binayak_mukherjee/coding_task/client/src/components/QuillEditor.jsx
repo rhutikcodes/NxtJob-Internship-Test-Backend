@@ -2,12 +2,15 @@ import React, { useEffect, useRef, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Import the snow theme
 import io from "socket.io-client";
+import { useParams } from "react-router-dom";
 
 const QuillEditor = () => {
   const [editorContent, setEditorContent] = useState("");
   const [socket, setSocket] = useState(null);
   const [quillInstance, setQuillInstance] = useState(null);
   const quillRef = useRef(null);
+
+  const {id: documentId} = useParams();
 
   const handleChange = (value) => {
     setEditorContent(value);
@@ -51,6 +54,10 @@ const QuillEditor = () => {
     if(quillRef.current){
 
       const editor = quillRef.current.getEditor(); //get the quill editor instance
+
+      //initially editor will be in disable state
+      editor.disable();
+      editor.setText("Loading...");
       setQuillInstance(editor);
     }
   }, [quillInstance]);
@@ -100,6 +107,19 @@ const QuillEditor = () => {
   }, [quillInstance, socket]);
 
 
+  useEffect(() => {
+
+    if(socket === null || quillInstance === null) return;
+
+    socket.on("load-document", document => {
+
+      quillInstance.setContents(document);
+      quillInstance.enable(); //we can only edit on the editor when the loading operation will be complete
+    });
+
+    socket.emit("get-document", documentId);
+
+  }, [documentId, quillInstance, socket]);
   return (
     <ReactQuill
       theme="snow"
