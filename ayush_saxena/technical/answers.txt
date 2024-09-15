@@ -1,0 +1,31 @@
+1.  Explain, in your own words, the importance of data consistency in real-time applications.
+->Data consistency in real-time applications is crucial because it ensures that all users see the same information at the same time. Imagine a chat application where you and your friends are sending messages. If the data isn't consistent, you might see old or missing messages while others see the latest updates. Consistent data makes sure everyone is on the same page, which is essential for things like collaborative tools, financial transactions, or any application where accurate, up-to-date information is critical.
+
+2. How do you handle concurrency issues in a multi-user environment?
+->To handle concurrency issues in a multi-user environment, I use several strategies:
+
+Locking: Implement locks to prevent multiple users from modifying the same data simultaneously.
+Transactions: Use transactions to ensure that a set of operations either completes successfully or doesn’t affect the data at all.
+Optimistic Concurrency Control: Allow changes but check for conflicts before saving data, rolling back if needed.
+Versioning: Track changes with version numbers to detect and resolve conflicts.
+These methods help keep the system stable and ensure that user actions don’t interfere with each other.
+
+3. Describe a scenario where you had to optimize database queries for better performance.
+->In a recent project, I worked on a system that was slowing down due to complex database queries. For instance, a query fetching user details along with their transaction history was taking too long because it joined multiple large tables. To optimize this:
+
+Indexed Columns: I added indexes on frequently queried columns to speed up lookups.
+Query Refactoring: I broke down the complex query into smaller, more manageable queries and used caching for frequently accessed data.
+Database Tuning: I adjusted database settings and used query analysis tools to identify and fix performance bottlenecks.
+These changes significantly improved query performance and reduced the system’s response time.
+
+4. Discuss the trade-offs between using WebSockets and HTTP/2 for real-time communication.
+->When choosing between WebSockets and HTTP/2 for real-time communication, consider the following trade-offs:
+
+WebSockets:
+
+Pros: Provides a full-duplex communication channel, allowing for real-time, bidirectional data exchange. This is great for applications like chat apps or live notifications.
+Cons: Requires a persistent connection, which can be resource-intensive and complex to manage, especially with many users.
+HTTP/2:
+
+Pros: Supports multiplexing, allowing multiple requests and responses to be sent over a single connection, which can reduce latency. It’s easier to use with existing HTTP infrastructure and supports better compression and header optimization.
+Cons: Not designed for bidirectional communication like WebSockets. It’s more suited for improving performance in traditional HTTP interactions rather than real-time data updates.
