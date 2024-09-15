@@ -1,0 +1,30 @@
+
+1. How do you stay updated on backend development topics and remain active in the community? (Forums/Discord/Slack/Meetups/Twitter/Blogs)
+-> To stay updated on backend development I -
+   have made one particular youtube channel where I just see coding or coding industry related things. So whatever happens in the industry I get notified about those
+
+   I join relevant discord and slack groups which are made specifically for backend.
+
+   I do follow some well knowleged influencers on social media to get updates.
+   
+   I subscribe  to newsletters like "Hacker news".
+
+
+2. What are your most-used IDE and keyboard shortcuts when coding?
+-> My most used IDE is Visual Studio Code due to its extensive exosytem of extension, easy to use.
+
+   ctrl + D : select the next occurence of the current word.
+   ctrl + Z : To undo the last changes
+   F2 : Rename symbol
+   ctrl + shift + C: Copy terminal output.
+
+3. How do you approach the design and implementation of a scalable backend system? Feel free to attach code snippets for better explanation.
+-> So it is a very crucial feature to use this in implementation.
+
+   We can horizontly scale our database by creating more server and storing data to different databases
+
+   or vertical scaling can be done adding more RAM and storage to the cpu.
+
+   Asynchronous Processing 
+    
+   caching and load balancing

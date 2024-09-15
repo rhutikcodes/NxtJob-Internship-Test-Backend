@@ -1,0 +1,28 @@
+1.  Explain, in your own words, the importance of data consistency in real-time applications.
+->  Data consistency is the most important aspect in the web applications. Because At any given point of time the 
+    data should be updated and should always show the latest version of the application. And it enhances the experience
+    of user. For eg. IRCTC always show the latest data so that the ticket of trains can be booked by any person if
+    it is vacent.
+
+2. How do you handle concurrency issues in a multi-user environment?
+-> So this situation arises when multiple users try to manipulate the data. so if we don't handle concurrency then if one
+   user changes the data it will not reflect to others and then other can also do some changes without knowing about the 
+   other changes and it will cause data inconsistency. 
+
+   we can handle by notifying the users about the changes at the time of saving the data so that it can be fixed at that 
+   time if it affects the data in different way and then we can fix the issue.
+
+   Or we can lock that file until one person is working on that file.
+
+3. Describe a scenario where you had to optimize database queries for better performance.
+-> we can add indexing to our data so the updation or deletion of data can be done faster.
+   we can do caching , storing frequently used data so that we don't need to fetch data again and again.
+   we can do store our data to different databases, so that fetching of data would be easy without writing complex queries.
+
+4. Discuss the trade-offs between using WebSockets and HTTP/2 for real-time communication.
+-> websockets are full duplex communication tool at the same time both server and client can communicate with each other
+   without waiting for one request. But it is very complex to use this because the connection remains open until the 
+   communication is happening
+
+   At the same time http/2 works as, one request at one time. It is not that complex and for fetching one time use data it 
+   can be used. But not more than one request can be done at one time.
