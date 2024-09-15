@@ -1,0 +1,20 @@
+{
+  "name": "coding_task",
+  "version": "1.0.0",
+  "description": "Your task is to build the backend of a simplified real-time collaborative document editor, similar to Google Docs. This application will handle user authentication, document management, real-time collaboration, version control, and permissions.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@clerk/clerk-sdk-node": "^5.0.38",
+    "@prisma/client": "^5.19.1",
+    "dotenv": "^16.4.5",
+    "hono": "^4.6.1",
+    "prisma": "^5.19.1",
+    "ws": "^8.18.0"
+  }
+}
