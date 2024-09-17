@@ -1,0 +1,49 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id           Int       @id @default(autoincrement())
+  email        String    @unique
+  documents    Document[]
+  collaborators Collaborator[]
+}
+
+model Document {
+  id           Int       @id @default(autoincrement())
+  title        String
+  content      String
+  ownerId      Int
+  owner        User      @relation(fields: [ownerId], references: [id])
+  versions     Version[]
+  collaborators Collaborator[]
+}
+
+model Collaborator {
+  id           Int       @id @default(autoincrement())
+  userId       Int
+  documentId   Int
+  permission   String
+  user         User      @relation(fields: [userId], references: [id])
+  document     Document  @relation(fields: [documentId], references: [id])
+}
+
+model Version {
+  id           Int       @id @default(autoincrement())
+  documentId   Int
+  content      String
+  createdAt    DateTime  @default(now())
+  document     Document  @relation(fields: [documentId], references: [id])
+}
+
+model Notification {
+  id           Int       @id @default(autoincrement())
+  userId       Int
+  message      String
+  createdAt    DateTime  @default(now())
+}
