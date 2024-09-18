@@ -1,0 +1,24 @@
+{
+  "name": "untitled-folder",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "keywords": [],
+  "description": "",
+  "devDependencies": {
+    "prisma": "^5.19.1"
+  },
+  "dependencies": {
+    "@clerk/clerk-js": "^5.22.2",
+    "@clerk/clerk-sdk-node": "^5.0.38",
+    "@prisma/client": "^5.19.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "mysql2": "^3.11.2",
+    "ws": "^8.18.0"
+  }
+}
