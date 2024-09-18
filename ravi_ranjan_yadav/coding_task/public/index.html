@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebSocket Client</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    #messages {
+      border: 1px solid #ddd;
+      padding: 10px;
+      width: 300px;
+      height: 200px;
+      overflow-y: scroll;
+      margin-bottom: 10px;
+    }
+    #input {
+      width: 300px;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+  <h1>WebSocket Client</h1>
+  <div id="messages"></div>
+  <input type="text" id="input" placeholder="Type a message" autofocus />
+  <button id="send">Send</button>
+
+  <script>
+    const ws = new WebSocket('ws://localhost:3001');
+
+    const messages = document.getElementById('messages');
+    const input = document.getElementById('input');
+    const sendButton = document.getElementById('send');
+
+    ws.onopen = () => {
+      console.log('WebSocket connection established');
+      messages.innerHTML += '<div>Connected to server</div>';
+    };
+
+    ws.onmessage = (event) => {
+      console.log('Message from server:', event.data);
+      messages.innerHTML += `<div>Server: ${event.data}</div>`;
+      messages.scrollTop = messages.scrollHeight;
+    };
+
+    ws.onerror = (error) => {
+      console.error('WebSocket error:', error);
+      messages.innerHTML += '<div>Error: ' + error.message + '</div>';
+    };
+
+    ws.onclose = () => {
+      console.log('WebSocket connection closed');
+      messages.innerHTML += '<div>Connection closed</div>';
+    };
+
+    sendButton.addEventListener('click', () => {
+      const message = input.value;
+      if (message) {
+        ws.send(message);
+        messages.innerHTML += `<div>You: ${message}</div>`;
+        input.value = '';
+        input.focus();
+      }
+    });
+
+    input.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        sendButton.click();
+      }
+    });
+  </script>
+</body>
+</html>
