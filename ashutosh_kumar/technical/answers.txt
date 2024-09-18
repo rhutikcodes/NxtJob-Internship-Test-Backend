@@ -1,0 +1,11 @@
+1.  Explain, in your own words, the importance of data consistency in real-time applications.
+->
+
+2. How do you handle concurrency issues in a multi-user environment?
+->
+
+3. Describe a scenario where you had to optimize database queries for better performance.
+->
+
+4. Discuss the trade-offs between using WebSockets and HTTP/2 for real-time communication.
+->
