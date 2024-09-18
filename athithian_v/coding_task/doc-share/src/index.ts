@@ -18,6 +18,8 @@ app.get('/', (c) => {
 	})
 })
 
+
+
 app.route('/user', User);
 app.route('/document', Document);
 
