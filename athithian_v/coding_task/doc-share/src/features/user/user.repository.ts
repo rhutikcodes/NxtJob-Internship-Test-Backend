@@ -2,7 +2,8 @@ import { eq } from "drizzle-orm";
 import db from "../../db/db";
 import { user } from "../../db/schema/user.schema";
 import ApplicationError from "../../middleware/errorHandler";
-import clerk from "@clerk/clerk-sdk-node";
+import clerk, { clerkClient, SignInToken } from "@clerk/clerk-sdk-node";
+import { HTTPException } from "hono/http-exception";
 
 export default class UserRepository{
 
@@ -18,9 +19,6 @@ export default class UserRepository{
     
     static register = async (email:string, password:string, username:string)=>{
         try {
-
-            const client = clerk.createClerkClient({secretKey: process.env.CLERK_SECRET_KEY});
-
             
             const newUser = await db.insert(user).values({email, username}).returning();
             const record = await db
@@ -33,7 +31,7 @@ export default class UserRepository{
                                 .from(user)
                                 .where(eq(user.id, newUser[0].id));
             
-            const clerkUser = await client.users.createUser({
+            const clerkUser = await clerkClient.users.createUser({
                 emailAddress: [email],
                 password: password,
                 username,
@@ -58,17 +56,30 @@ export default class UserRepository{
         }
     }
 
-    // static login = async (email:string, password:string):Promise<string>=>{
-    //     try {
+    static login = async (email:string, password:string):Promise<SignInToken>=>{
+        try {
 
-    //         const client = clerk.createClerkClient({secretKey: process.env.CLERK_SECRET_KEY});
+            const client = clerk.createClerkClient({secretKey: process.env.CLERK_SECRET_KEY});
 
-    //         const signIn = await createAllo;
+            const userList = await clerkClient.users.getUserList({emailAddress: [email]});
 
-    //         return token;
+
+
+            if(userList.totalCount<=0){
+                throw new HTTPException(400, {message: "Username / Password"});
+            }
+
+            const userId = userList.data[0]!.id;
+
+            const signInTokens = await clerkClient.signInTokens.createSignInToken({
+                userId,
+                expiresInSeconds: 60 * 60 * 24 * 30,
+              });
+             
+              return signInTokens;
             
-    //     } catch (error) {
-    //         throw error;
-    //     }
-    // }
+        } catch (error) {
+            throw error;
+        }
+    }
 }
