@@ -1,37 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
-generator client {
-  provider = "prisma-client-js"
-}
-
 model User {
-  id          String       @id @default(cuid())
-  email       String       @unique
-  name        String
-  documents   Document[]   @relation("UserDocuments")
-  permissions Permission[] @relation("UserPermissions")
+  id         Int          @id @default(autoincrement())
+  username   String       @unique
+  documents  Document[]
+  Permission Permission[]
 }
 
 model Document {
-  id          String       @id @default(cuid())
+  id          Int          @id @default(autoincrement())
   title       String
   content     String
-  version     Int          @default(1)
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  ownerId     String
-  owner       User         @relation("UserDocuments", fields: [ownerId], references: [id])
-  permissions Permission[] @relation("DocumentPermissions")
+  ownerId     Int
+  owner       User         @relation(fields: [ownerId], references: [id])
+  permissions Permission[]
 }
 
 model Permission {
-  id         String   @id @default(cuid())
-  documentId String
-  userId     String
-  access     String
-  document   Document @relation("DocumentPermissions", fields: [documentId], references: [id])
-  user       User     @relation("UserPermissions", fields: [userId], references: [id])
+  id         Int      @id @default(autoincrement())
+  documentId Int
+  userId     Int
+  accessType String 
+  document   Document @relation(fields: [documentId], references: [id])
+  user       User     @relation(fields: [userId], references: [id])
 }
