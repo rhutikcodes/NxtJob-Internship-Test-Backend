@@ -1,25 +1,25 @@
 name = "collab-doc-editor"
-main = "src/index.js" # Your entry point
+main = "src/index.js"
 compatibility_date = "2024-09-11"
+node_compat = true
 
-# Development server mode
-workers_dev = true
+[build]
+    # List modules that should be treated as external
+    # These won't be bundled into the Worker code
+    external_modules = ["mock-aws-s3", "aws-sdk", "nock"]
 
-# Define compatibility flags
-compatibility_flags = ["nodejs_compat"]
 
-# Define KV Namespace
+# Optional: Define KV Namespace if needed
 kv_namespaces = [
-  { binding = "MY_NAMESPACE_BINDING", id = "your-kv-namespace-id" }
+  { binding = "k1", id = "8765c7305c1643ee8525ebd8da88ceb0" }
 ]
 
-# Routes (if applicable)
-route = { pattern = "yourdomain.com/*", zone_name = "yourdomain.com" }
+# Optional: Define D1 Database if needed
+[[d1_databases]]
+binding = "DB"
+database_id = "3c173040-262e-4b87-ad90-18ed55f10153"
 
-[env.staging]
-name = "collab-doc-editor-staging"
-route = { pattern = "staging.yourdomain.com/*", zone_name = "yourdomain.com" }
-
-kv_namespaces = [
-  { binding = "MY_NAMESPACE_BINDING", id = "your-staging-kv-namespace-id" }
-]
+# Optional: Define routes if needed
+[[routes]]
+pattern = "yourdomain.com/*"
+zone_name = "yourdomain.com"

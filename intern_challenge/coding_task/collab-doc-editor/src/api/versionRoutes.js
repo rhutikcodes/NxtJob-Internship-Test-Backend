@@ -1,13 +1,9 @@
-import { versionService } from '../services/versionService.js';
+import { Hono } from 'hono';
+import * as versionController from '../controllers/versionController.js';
 
-export const createVersion = async (req, res) => {
-	const { documentId, content } = req.body;
-	const version = await versionService.createVersion(documentId, content);
-	res.json({ version });
-};
+const versionRoutes = new Hono();
 
-export const getVersions = async (req, res) => {
-	const { documentId } = req.params;
-	const versions = await versionService.getVersions(documentId);
-	res.json({ versions });
-};
+versionRoutes.post('/versions', versionController.createVersion);
+versionRoutes.get('/versions/:documentId', versionController.getVersions);
+
+export default versionRoutes;

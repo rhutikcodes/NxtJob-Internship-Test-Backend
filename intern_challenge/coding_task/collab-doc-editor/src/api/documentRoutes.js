@@ -1,20 +1,10 @@
-import { documentService } from '../services/documentService.js';
+import { Hono } from 'hono';
+import * as documentController from '../controllers/documentController.js';
 
-export const createDocument = async (req, res) => {
-	const { title, content } = req.body;
-	const document = await documentService.createDocument(title, content, req.auth.userId);
-	res.json({ document });
-};
+const documentRoutes = new Hono();
 
-export const updateDocument = async (req, res) => {
-	const { id } = req.params;
-	const { content } = req.body;
-	const updatedDocument = await documentService.updateDocument(id, content);
-	res.json({ updatedDocument });
-};
+documentRoutes.post('/documents', documentController.createDocument);
+documentRoutes.put('/documents/:id', documentController.updateDocument);
+documentRoutes.delete('/documents/:id', documentController.deleteDocument);
 
-export const deleteDocument = async (req, res) => {
-	const { id } = req.params;
-	await documentService.deleteDocument(id);
-	res.json({ message: 'Document deleted' });
-};
+export default documentRoutes;

@@ -1,13 +1,9 @@
-import { authService } from '../services/authService.js';
+import { Hono } from 'hono';
+import { loginUser, registerUser } from '../controllers/authCOntroller.js';
 
-export const loginUser = async (req, res) => {
-	const { email, password } = req.body;
-	const user = await authService.login(email, password);
-	res.json({ user });
-};
+const authRoutes = new Hono();
 
-export const registerUser = async (req, res) => {
-	const { email, password } = req.body;
-	const newUser = await authService.register(email, password);
-	res.json({ newUser });
-};
+authRoutes.post('/login', loginUser);
+authRoutes.post('/register', registerUser);
+
+export default authRoutes;
