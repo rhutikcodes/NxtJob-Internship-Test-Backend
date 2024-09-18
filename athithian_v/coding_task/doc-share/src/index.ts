@@ -1,18 +1,34 @@
-/**
- * Welcome to Cloudflare Workers! This is your first worker.
- *
- * - Run `npm run dev` in your terminal to start a development server
- * - Open a browser tab at http://localhost:8787/ to see your worker in action
- * - Run `npm run deploy` to publish your worker
- *
- * Bind resources to your worker in `wrangler.toml`. After adding bindings, a type definition for the
- * `Env` object can be regenerated with `npm run cf-typegen`.
- *
- * Learn more at https://developers.cloudflare.com/workers/
- */
+import { Hono } from "hono";
+import { HTTPException } from "hono/http-exception";
+import User from "./features/user/user.controller";
+import Document from "./features/document/document.controller";
 
-export default {
-	async fetch(request, env, ctx): Promise<Response> {
-		return new Response('Hello World!');
-	},
-} satisfies ExportedHandler<Env>;
+
+export type Env = {
+	DATABASE_URL: string,
+	CLERK_PUBLISHABLE_KEY: string,
+	CLERK_SECRET_KEY: string
+}
+
+const app = new Hono<{Bindings:Env}>();
+
+app.get('/', (c) => {
+	return c.json({
+		message: "Welcome to DOC Share"
+	})
+})
+
+app.route('/user', User);
+app.route('/document', Document);
+
+app.onError((err, c) => {
+	console.log(err);
+	
+  if (err instanceof HTTPException) {
+    return err.getResponse()
+  }
+
+  return new Response('An unexpected error occurred', { status: 500 });
+})
+
+export default app;
