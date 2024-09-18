@@ -1,0 +1,29 @@
+{
+	"name": "collab-doc-editor",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"dev": "wrangler dev",
+		"start": "wrangler dev",
+		"deploy": "wrangler deploy",
+		"test": "vitest",
+		"build": "wrangler build"
+	},
+	"devDependencies": {
+		"@cloudflare/vitest-pool-workers": "^0.4.5",
+		"vitest": "1.5.0",
+		"wrangler": "^3.78.5"
+	},
+	"dependencies": {
+		"@clerk/clerk-sdk-node": "^5.0.42",
+		"aws-sdk": "^2.1691.0",
+		"bcrypt": "^5.1.1",
+		"dotenv": "^16.4.5",
+		"hono": "^4.5.11",
+		"mock-aws-s3": "^4.0.2",
+		"nock": "^13.5.5",
+		"node-libs-browser": "^2.2.1",
+		"ws": "^8.18.0"
+	}
+}

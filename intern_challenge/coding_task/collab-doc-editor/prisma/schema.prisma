@@ -1,0 +1,31 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  documents Document[]
+}
+
+model Document {
+  id        Int        @id @default(autoincrement())
+  title     String
+  content   String
+  userId    Int
+  user      User       @relation(fields: [userId], references: [id])
+  versions  Version[]
+}
+
+model Version {
+  id         Int      @id @default(autoincrement())
+  content    String
+  timestamp  DateTime @default(now())
+  documentId Int
+  document   Document @relation(fields: [documentId], references: [id])
+}
