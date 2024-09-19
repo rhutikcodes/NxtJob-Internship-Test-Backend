@@ -1,6 +1,12 @@
 # Doc Share
 - Enable Multiple user with eidt permission to edit single document file.
 
+### Deplyment:
+https://doc-share.athithianpkt2001.workers.dev/
+
+### Socket:
+wss://doc-share.athithianpkt2001.workers.dev/ws
+
 ### Run Locally:
 - Clone the repository.
 - Move to doc-share directory.

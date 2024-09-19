@@ -16,8 +16,6 @@ export type Env = {
 const app = new Hono<{Bindings:Env}>();
 
 app.get('/', (c) => {
-	console.log();
-	
 	return c.json({
 		message: "Welcome to DOC Share"
 	})
