@@ -95,9 +95,6 @@ export default class DocumentRepository{
     static setPermission = async (owner:number, userId:number, docId:number, permit:string, db:NeonHttpDatabase<Record<string, never>>) => {
 
         const userExists = await db.select().from(user).where(eq(user.id, userId));
-        console.log(userId);
-        
-        console.log(userExists);
         
         if(userExists.length===0){
             throw new ApplicationError(400, "User for whom permission to be set does not exists");
@@ -140,5 +137,36 @@ export default class DocumentRepository{
         }else{
             await db.insert(permission).values({docId,userId,permit});
         }
+    }
+
+    static view = async (userId:number, docId:number, db:NeonHttpDatabase<Record<string, never>>) => {
+
+        const userExists = await db.select().from(user).where(eq(user.id, userId));
+        
+        if(userExists.length===0){
+            throw new ApplicationError(400, "User for whom permission to be set does not exists");
+        }
+
+        const doc = await db.select({owner: document.createdBy, content: document.content, name: document.name}).from(document).where(eq(document.id, docId));
+
+        if(doc.length===0){
+            throw new ApplicationError(400, "Document Does not exists. Please check the document Id");
+        }
+
+        const permissionRecord = await db
+            .select()
+            .from(permission)
+            .where(
+                and(
+                    eq(permission.docId, docId),
+                    eq(permission.userId, userId)
+                )
+            );
+
+        if(permissionRecord.length!==0 || doc[0].owner !== userId){
+            throw new ApplicationError(400, `User:${userId} already have view access to Document:${docId}`)
+        }
+
+        return doc[0];
     }
 }

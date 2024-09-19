@@ -6,7 +6,7 @@ import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
 import { createClerkClient, User } from "@clerk/clerk-sdk-node";
 import { user } from "../../db/schema/user.schema";
-import { eq } from "drizzle-orm";
+import axios from "axios";
 
 const UserContoller = new Hono<{Bindings:Env}>();
 
@@ -18,18 +18,6 @@ UserContoller.post("/register", async (c)=>{
         const db = drizzle(sql);
 
         const newUser = await db.insert(user).values({email, username}).returning();
-            const record = await db
-                                .select(
-                                    {
-                                        id: user.id, 
-                                        email: user.email, 
-                                        username: user.username,
-                                    })
-                                .from(user)
-                                .where(eq(user.id, newUser[0].id));
-        
-                                console.log(newUser);
-                                
 
         const clerk = createClerkClient({secretKey: c.env.CLERK_SECRET_KEY});
 
@@ -74,21 +62,39 @@ UserContoller.post("/login", async (c)=>{
         }
 
         const userId = (user.data[0] as User).id;
+
         
         const passwordCheck = await clerk.users.verifyPassword({userId,password}).catch(err=>{
             if(err.errors[0].code === "incorrect_password"){
-            throw new ApplicationError(400, "Email/Password Incorrect");
-        }
+                throw new ApplicationError(400, "Email/Password Incorrect");
+            }
+            else{
+                throw err;
+            }
         });
+        
+        const response = await axios.post('https://eternal-joey-29.clerk.accounts.dev/v1/client/sign_ins', 
+            {
+                strategy: 'password',
+                identifier: email,
+                password,
+            },
+            {
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "Authorization": "Bearer "+c.env.CLERK_SECRET_KEY
+                }
+            }
+        );
 
-        const signIntoken = await clerk.signInTokens.createSignInToken({userId, expiresInSeconds: 24*60*60});
+        const session_id:string = response.data.response.created_session_id;
 
-
+        const token = await clerk.sessions.getToken(session_id, "doc-share");
 
         return c.json({
             success: true,
             message: "User Logged In",
-            signIntoken: signIntoken.token
+            token: token.jwt
         })
     }catch(err:any){
         
