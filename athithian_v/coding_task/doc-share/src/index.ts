@@ -6,6 +6,7 @@ import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
 import { createClerkClient } from "@clerk/clerk-sdk-node";
 import ApplicationError from "./middleware/errorHandler";
+import authenticate from "./features/user/authentication";
 
 
 export type Env = {
@@ -66,14 +67,6 @@ function parseEventData(event:MessageEvent){
 	return data;
 }
 
-async function isAuth(userId:string, secretKey:string){
-	console.log(userId);
-	const clerk = createClerkClient({secretKey: secretKey});
-	const user = await clerk.users.getUserList({externalId: [userId]});
-	console.log(user);
-	return user.totalCount;
-}
-
 app.get('/ws', async (c) => {
 	if (c.req.header('Upgrade') !== 'websocket') {
 		return c.text('Expected a WebSocket request', 400);
@@ -92,12 +85,14 @@ app.get('/ws', async (c) => {
 	server.addEventListener('message', async (event) => {
 
 		let data = parseEventData(event);
-
-		const auth = await isAuth(data.userId, c.env.CLERK_SECRET_KEY);
-		if(auth>0){
+		
+		const auth = await authenticate(data.token, c.env.CLERK_SECRET_KEY);
+		console.log(auth);
+		
+		if(auth){
 			registerUserConnection(data.userId, server);			
 		}else{
-			server.send(JSON.stringify({ type: 'error', message: 'Authentication failed' }));
+			server.send(JSON.stringify({ type: 'error', message: 'UnAuthentication' }));
           	server.close();
 			return;
 		}

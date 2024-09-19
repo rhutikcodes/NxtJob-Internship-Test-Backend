@@ -4,13 +4,13 @@ import { HTTPException } from "hono/http-exception";
 import { Env } from "../../index";
 import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
-import { createClerkClient } from "@clerk/clerk-sdk-node";
+import { createClerkClient, User } from "@clerk/clerk-sdk-node";
 import { user } from "../../db/schema/user.schema";
 import { eq } from "drizzle-orm";
 
-const User = new Hono<{Bindings:Env}>();
+const UserContoller = new Hono<{Bindings:Env}>();
 
-User.post("/register", async (c)=>{
+UserContoller.post("/register", async (c)=>{
     try{
         const {email, password, username} = await c.req.json();
 
@@ -57,7 +57,7 @@ User.post("/register", async (c)=>{
     }
 })
 
-User.post("/login", async (c)=>{
+UserContoller.post("/login", async (c)=>{
     try{
 
 
@@ -65,16 +65,33 @@ User.post("/login", async (c)=>{
         
         
         const clerk = createClerkClient({secretKey: c.env.CLERK_SECRET_KEY});
+
+    
         const user = await clerk.users.getUserList({emailAddress: email});
 
-        console.log(user);
+        if(user.totalCount===0){
+            throw new ApplicationError(400, "Email/Password Incorrect");
+        }
+
+        const userId = (user.data[0] as User).id;
         
+        const passwordCheck = await clerk.users.verifyPassword({userId,password}).catch(err=>{
+            if(err.errors[0].code === "incorrect_password"){
+            throw new ApplicationError(400, "Email/Password Incorrect");
+        }
+        });
+
+        const signIntoken = await clerk.signInTokens.createSignInToken({userId, expiresInSeconds: 24*60*60});
+
+
 
         return c.json({
             success: true,
-            message: "New User created Successfull"
+            message: "User Logged In",
+            signIntoken: signIntoken.token
         })
-    }catch(err){
+    }catch(err:any){
+        
         if(err instanceof ApplicationError){
             throw new HTTPException(400, {message: err.message});
         }
@@ -82,4 +99,4 @@ User.post("/login", async (c)=>{
     }
 })
 
-export default User;
+export default UserContoller;
