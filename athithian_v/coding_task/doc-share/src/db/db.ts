@@ -6,9 +6,11 @@ config({
     path: '.dev.vars'
 })
 
+let db;
+if(process.env.DATABASE_URL){
+    const sql = neon(process.env.DATABASE_URL!);
+    db = drizzle(sql);
+}
 
-const sql = neon(process.env.DATABASE_URL!);
-
-const db = drizzle(sql);
 
 export default db;
