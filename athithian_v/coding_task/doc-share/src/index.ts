@@ -3,6 +3,7 @@ import { HTTPException } from "hono/http-exception";
 
 import User from "./features/user/user.controller";
 import Socket from "./socket";
+import { cors } from "hono/cors";
 
 
 export type Env = {
@@ -23,7 +24,7 @@ app.get('/', (c) => {
 })
 
 
-
+app.use("/", cors());
 app.route('/user', User);
 app.route('/ws', Socket);
 
